@@ -2,8 +2,8 @@ package info.tduty.typetalkserver.service.ws;
 
 import info.tduty.typetalkserver.data.User;
 import info.tduty.typetalkserver.data.event.Event;
-import info.tduty.typetalkserver.domain.EventHandler;
-import info.tduty.typetalkserver.domain.EventHandlerPull;
+import info.tduty.typetalkserver.domain.handler.EventHandler;
+import info.tduty.typetalkserver.domain.handler.pull.EventHandlerPull;
 import info.tduty.typetalkserver.service.parser.EventParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         User user = (User) session.getPrincipal();
-        sessionRegistry.put(user, session);
+        sessionRegistry.put(user.getId(), session);
         logger.debug("connection name: {}, id: {}", user.getName(), user.getId());
     }
 
@@ -55,7 +55,7 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         User user = (User) session.getPrincipal();
-        sessionRegistry.remove(user);
+        sessionRegistry.remove(user.getId());
         logger.debug("disconnect code: {}, reason: {}, name: {}, id: {}",
                 status.getCode(), status.getReason(), user.getName(), user.getId());
     }

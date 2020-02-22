@@ -10,21 +10,21 @@ import java.util.Map;
 @Component
 public class SessionRegistry {
 
-    private Map<User, WebSocketSession> sessionMap;
+    private Map<String, WebSocketSession> sessionMap;
 
     public SessionRegistry() {
         sessionMap = new HashMap<>();
     }
 
-    public void put(User user, WebSocketSession session) {
-        sessionMap.put(user, session);
+    public void put(String userId, WebSocketSession session) {
+        sessionMap.put(userId, session);
     }
 
-    public void remove(User user) {
-        sessionMap.remove(user);
+    public void remove(String userId) {
+        sessionMap.remove(userId);
     }
 
-    public WebSocketSession get(User user) {
-        return sessionMap.get(user);
+    public WebSocketSession get(String userId) {
+        return sessionMap.get(userId);
     }
 }

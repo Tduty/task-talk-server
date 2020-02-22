@@ -9,7 +9,7 @@ public class LessonEntity {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
 
     @Column(name="title")
     private String title;
@@ -35,11 +35,11 @@ public class LessonEntity {
     @OneToMany(mappedBy="lesson", fetch = FetchType.LAZY)
     private List<DictionaryEntity> dictionaries;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

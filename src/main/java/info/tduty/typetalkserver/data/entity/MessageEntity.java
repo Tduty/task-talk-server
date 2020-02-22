@@ -8,7 +8,7 @@ public class MessageEntity {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
 
     @Column(name="content")
     private String content;
@@ -32,11 +32,11 @@ public class MessageEntity {
     )
     private UserEntity sender;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

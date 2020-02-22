@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class EventSender {
@@ -26,16 +27,22 @@ public class EventSender {
         this.sessionRegistry = sessionRegistry;
     }
 
-    public void send(User user, Event event) {
+    public void send(List<String> userIds, Event event) {
+        for (String userId : userIds) {
+            send(userId, event);
+        }
+    }
+
+    public void send(String userId, Event event) {
         try {
             String jsonStr = gson.toJson(event);
-            WebSocketSession session = sessionRegistry.get(user);
+            WebSocketSession session = sessionRegistry.get(userId);
             synchronized(session) {
                 session.sendMessage(new TextMessage(jsonStr));
             }
-            logger.debug("message sent to name: {}, id: {}, type: {}, event: {}", user.getName(), user.getId(), event.getType(), event);
+            logger.debug("message sent to id: {}, type: {}, event: {}", userId, event.getType(), event);
         } catch (IOException e) {
-            logger.error("message not sent to name: {}, id: {}, event: {}", user.getName(), user.getId(), event);
+            logger.error("message not sent to id: {}, event: {}", userId, event);
         }
     }
 

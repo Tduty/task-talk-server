@@ -10,13 +10,19 @@ public class ClassEntity {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
 
-    @Column(name="title")
+    @Column(name="title", unique = true)
     private String title;
+
+    @Column(name="avatar")
+    private String avatar;
 
     @OneToMany(mappedBy="classEntity", fetch = FetchType.LAZY)
     private List<UserEntity> students;
+
+    @OneToMany(mappedBy="classEntity", fetch = FetchType.LAZY)
+    private List<ChatEntity> chats;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -26,11 +32,11 @@ public class ClassEntity {
     )
     private Set<LessonEntity> lessons;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -42,12 +48,28 @@ public class ClassEntity {
         this.title = title;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public List<UserEntity> getStudents() {
         return students;
     }
 
     public void setStudents(List<UserEntity> students) {
         this.students = students;
+    }
+
+    public List<ChatEntity> getChats() {
+        return chats;
+    }
+
+    public void setChats(List<ChatEntity> chats) {
+        this.chats = chats;
     }
 
     public Set<LessonEntity> getLessons() {
@@ -67,7 +89,9 @@ public class ClassEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
         if (students != null ? !students.equals(that.students) : that.students != null) return false;
+        if (chats != null ? !chats.equals(that.chats) : that.chats != null) return false;
         return lessons != null ? lessons.equals(that.lessons) : that.lessons == null;
     }
 
@@ -75,7 +99,9 @@ public class ClassEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         result = 31 * result + (students != null ? students.hashCode() : 0);
+        result = 31 * result + (chats != null ? chats.hashCode() : 0);
         result = 31 * result + (lessons != null ? lessons.hashCode() : 0);
         return result;
     }
@@ -85,7 +111,9 @@ public class ClassEntity {
         return "ClassEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", students=" + students +
+                ", chats=" + chats +
                 ", lessons=" + lessons +
                 '}';
     }

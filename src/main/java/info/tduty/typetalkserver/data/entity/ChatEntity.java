@@ -9,7 +9,7 @@ public class ChatEntity {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
 
     @Column(name="title")
     private String title;
@@ -26,11 +26,19 @@ public class ChatEntity {
     @ManyToMany(mappedBy="chats", fetch = FetchType.LAZY)
     private List<UserEntity> chatMembers;
 
-    public Long getId() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "class",
+            joinColumns = @JoinColumn(name = "ID_CHAT"),
+            inverseJoinColumns = @JoinColumn(name = "ID_CLASS")
+    )
+    private ClassEntity classEntity;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -74,6 +82,14 @@ public class ChatEntity {
         this.chatMembers = chatMembers;
     }
 
+    public ClassEntity getClassEntity() {
+        return classEntity;
+    }
+
+    public void setClassEntity(ClassEntity classEntity) {
+        this.classEntity = classEntity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,7 +102,8 @@ public class ChatEntity {
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
         if (messages != null ? !messages.equals(that.messages) : that.messages != null) return false;
-        return chatMembers != null ? chatMembers.equals(that.chatMembers) : that.chatMembers == null;
+        if (chatMembers != null ? !chatMembers.equals(that.chatMembers) : that.chatMembers != null) return false;
+        return classEntity != null ? classEntity.equals(that.classEntity) : that.classEntity == null;
     }
 
     @Override
@@ -97,6 +114,7 @@ public class ChatEntity {
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         result = 31 * result + (messages != null ? messages.hashCode() : 0);
         result = 31 * result + (chatMembers != null ? chatMembers.hashCode() : 0);
+        result = 31 * result + (classEntity != null ? classEntity.hashCode() : 0);
         return result;
     }
 
@@ -109,6 +127,7 @@ public class ChatEntity {
                 ", avatar='" + avatar + '\'' +
                 ", messages=" + messages +
                 ", chatMembers=" + chatMembers +
+                ", classEntity=" + classEntity +
                 '}';
     }
 }
