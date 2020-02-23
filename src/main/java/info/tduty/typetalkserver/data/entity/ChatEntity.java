@@ -1,14 +1,18 @@
 package info.tduty.typetalkserver.data.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Chat")
 public class ChatEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     @Column(name="title")
@@ -21,17 +25,17 @@ public class ChatEntity {
     private String avatar;
 
     @OneToMany(mappedBy="chat", fetch = FetchType.LAZY)
-    private List<MessageEntity> messages;
+    private Set<MessageEntity> messages;
 
-    @ManyToMany(mappedBy="chats", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "User_to_Chat",
+            joinColumns = { @JoinColumn(name = "ID_CHAT") },
+            inverseJoinColumns = { @JoinColumn(name = "ID_USER") }
+    )
     private List<UserEntity> chatMembers;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "class",
-            joinColumns = @JoinColumn(name = "ID_CHAT"),
-            inverseJoinColumns = @JoinColumn(name = "ID_CLASS")
-    )
     private ClassEntity classEntity;
 
     public String getId() {
@@ -66,11 +70,11 @@ public class ChatEntity {
         this.avatar = avatar;
     }
 
-    public List<MessageEntity> getMessages() {
+    public Set<MessageEntity> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<MessageEntity> messages) {
+    public void setMessages(Set<MessageEntity> messages) {
         this.messages = messages;
     }
 
@@ -101,8 +105,6 @@ public class ChatEntity {
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        if (messages != null ? !messages.equals(that.messages) : that.messages != null) return false;
-        if (chatMembers != null ? !chatMembers.equals(that.chatMembers) : that.chatMembers != null) return false;
         return classEntity != null ? classEntity.equals(that.classEntity) : that.classEntity == null;
     }
 
@@ -112,8 +114,6 @@ public class ChatEntity {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (messages != null ? messages.hashCode() : 0);
-        result = 31 * result + (chatMembers != null ? chatMembers.hashCode() : 0);
         result = 31 * result + (classEntity != null ? classEntity.hashCode() : 0);
         return result;
     }
@@ -125,8 +125,6 @@ public class ChatEntity {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", messages=" + messages +
-                ", chatMembers=" + chatMembers +
                 ", classEntity=" + classEntity +
                 '}';
     }

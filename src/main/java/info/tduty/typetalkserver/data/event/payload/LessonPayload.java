@@ -25,6 +25,9 @@ public class LessonPayload implements EventPayload {
     @SerializedName("expected")
     private List<ExpectedPayload> expectedList;
 
+    public LessonPayload() {
+
+    }
 
     public LessonPayload(String id,
                          String title,

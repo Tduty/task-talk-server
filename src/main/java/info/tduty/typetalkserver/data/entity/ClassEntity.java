@@ -1,5 +1,7 @@
 package info.tduty.typetalkserver.data.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +11,8 @@ import java.util.Set;
 public class ClassEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     @Column(name="title", unique = true)
@@ -89,10 +92,7 @@ public class ClassEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        if (students != null ? !students.equals(that.students) : that.students != null) return false;
-        if (chats != null ? !chats.equals(that.chats) : that.chats != null) return false;
-        return lessons != null ? lessons.equals(that.lessons) : that.lessons == null;
+        return avatar != null ? !avatar.equals(that.avatar) : that.avatar != null;
     }
 
     @Override
@@ -100,9 +100,6 @@ public class ClassEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (students != null ? students.hashCode() : 0);
-        result = 31 * result + (chats != null ? chats.hashCode() : 0);
-        result = 31 * result + (lessons != null ? lessons.hashCode() : 0);
         return result;
     }
 
@@ -112,9 +109,6 @@ public class ClassEntity {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", students=" + students +
-                ", chats=" + chats +
-                ", lessons=" + lessons +
                 '}';
     }
 }

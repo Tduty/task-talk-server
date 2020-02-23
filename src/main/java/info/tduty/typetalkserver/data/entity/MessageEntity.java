@@ -1,5 +1,7 @@
 package info.tduty.typetalkserver.data.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,8 +9,12 @@ import javax.persistence.*;
 public class MessageEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
+
+    @Column(name="sync_id", unique = true)
+    private String syncId;
 
     @Column(name="content")
     private String content;
@@ -17,19 +23,9 @@ public class MessageEntity {
     private String avatar;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "chat",
-            joinColumns = @JoinColumn(name = "ID_MESSAGE"),
-            inverseJoinColumns = @JoinColumn(name = "ID_CHAT")
-    )
     private ChatEntity chat;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "sender",
-            joinColumns = @JoinColumn(name = "ID_MESSAGE"),
-            inverseJoinColumns = @JoinColumn(name = "ID_SENDER")
-    )
     private UserEntity sender;
 
     public String getId() {
@@ -38,6 +34,14 @@ public class MessageEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getSyncId() {
+        return syncId;
+    }
+
+    public void setSyncId(String syncId) {
+        this.syncId = syncId;
     }
 
     public String getContent() {
@@ -80,6 +84,7 @@ public class MessageEntity {
         MessageEntity that = (MessageEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (syncId != null ? !syncId.equals(that.syncId) : that.syncId != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
         if (chat != null ? !chat.equals(that.chat) : that.chat != null) return false;
@@ -89,6 +94,7 @@ public class MessageEntity {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (syncId != null ? syncId.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         result = 31 * result + (chat != null ? chat.hashCode() : 0);
@@ -99,7 +105,8 @@ public class MessageEntity {
     @Override
     public String toString() {
         return "MessageEntity{" +
-                "id=" + id +
+                "id='" + id + '\'' +
+                ", syncId='" + syncId + '\'' +
                 ", content='" + content + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", chat=" + chat +

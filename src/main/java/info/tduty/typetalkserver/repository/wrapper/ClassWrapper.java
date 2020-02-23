@@ -17,9 +17,7 @@ public class ClassWrapper {
         this.classJpaRepository = classJpaRepository;
     }
 
-    public ClassEntity add(String title) {
-        ClassEntity classEntity = new ClassEntity();
-        classEntity.setTitle(title);
+    public ClassEntity add(ClassEntity classEntity) {
         return classJpaRepository.save(classEntity);
     }
 

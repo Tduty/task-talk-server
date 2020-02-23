@@ -21,4 +21,12 @@ public class UserWrapper {
     public Optional<UserEntity> get(String id) {
         return userJpaRepository.findById(id);
     }
+
+    public boolean isExist(String id) {
+        return userJpaRepository.existsById(id);
+    }
+
+    public UserEntity add(UserEntity user) {
+        return userJpaRepository.save(user);
+    }
 }

@@ -20,8 +20,8 @@ public class MessageWrapper {
         this.messageJpaRepository = messageJpaRepository;
     }
 
-    public Optional<MessageEntity> get(String id) {
-        return messageJpaRepository.findById(id);
+    public Optional<MessageEntity> getBySyncId(String id) {
+        return Optional.of(messageJpaRepository.findBySyncId(id));
     }
 
     public List<MessageEntity> getByChatId(String chatId) {

@@ -1,5 +1,6 @@
 package info.tduty.typetalkserver.data.event;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Event {
@@ -7,8 +8,12 @@ public class Event {
     @SerializedName("type")
     private String type;
 
-    @SerializedName("payload")
+    @Expose(serialize = false, deserialize = false)
     private EventPayload eventPayload;
+
+    public Event() {
+
+    }
 
     public Event(String type, EventPayload eventPayload) {
         this.type = type;

@@ -1,5 +1,7 @@
 package info.tduty.typetalkserver.data.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,7 +10,8 @@ import java.util.List;
 public class LessonEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     @Column(name="title")
@@ -117,12 +120,7 @@ public class LessonEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (classes != null ? !classes.equals(that.classes) : that.classes != null) return false;
-        if (completed != null ? !completed.equals(that.completed) : that.completed != null) return false;
-        if (execute != null ? !execute.equals(that.execute) : that.execute != null) return false;
-        if (tasks != null ? !tasks.equals(that.tasks) : that.tasks != null) return false;
-        return dictionaries != null ? dictionaries.equals(that.dictionaries) : that.dictionaries == null;
+        return description != null ? !description.equals(that.description) : that.description != null;
     }
 
     @Override
@@ -131,11 +129,6 @@ public class LessonEntity {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (classes != null ? classes.hashCode() : 0);
-        result = 31 * result + (completed != null ? completed.hashCode() : 0);
-        result = 31 * result + (execute != null ? execute.hashCode() : 0);
-        result = 31 * result + (tasks != null ? tasks.hashCode() : 0);
-        result = 31 * result + (dictionaries != null ? dictionaries.hashCode() : 0);
         return result;
     }
 
@@ -146,11 +139,6 @@ public class LessonEntity {
                 ", title='" + title + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", description='" + description + '\'' +
-                ", classes=" + classes +
-                ", completed=" + completed +
-                ", execute=" + execute +
-                ", tasks=" + tasks +
-                ", dictionaries=" + dictionaries +
                 '}';
     }
 }

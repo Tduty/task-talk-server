@@ -23,6 +23,10 @@ public class MessageNewPayload implements EventPayload {
     @SerializedName("exist_mistake")
     private Boolean existMistake;
 
+    public MessageNewPayload() {
+
+    }
+
     public MessageNewPayload(String id,
                              String chatId,
                              String senderId,

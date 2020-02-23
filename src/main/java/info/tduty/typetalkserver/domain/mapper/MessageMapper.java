@@ -26,7 +26,7 @@ public class MessageMapper {
 
     public MessageEntity payloadToDB(MessageNewPayload payload) {
         MessageEntity message = new MessageEntity();
-        message.setId(payload.getId());
+        message.setSyncId(payload.getId());
         message.setContent(payload.getBody());
         message.setChat(chatWrapper.get(payload.getChatId()).orElse(null));
         message.setSender(userWrapper.get(payload.getSenderId()).orElse(null));
@@ -35,7 +35,7 @@ public class MessageMapper {
 
     public Event dbToEvent(MessageEntity message) {
         MessageNewPayload payload = new MessageNewPayload(
-                message.getId(),
+                message.getSyncId(),
                 message.getChat().getId(),
                 message.getSender().getId(),
                 message.getContent(),
@@ -47,7 +47,7 @@ public class MessageMapper {
 
     public MessageDTO dbToDTO(MessageEntity message) {
         MessageDTO dto = new MessageDTO(
-                message.getId(),
+                message.getSyncId(),
                 message.getChat().getId(),
                 message.getSender().getId(),
                 message.getContent(),

@@ -21,4 +21,8 @@ public class ChatWrapper {
     public Optional<ChatEntity> get(String id) {
         return chatJpaRepository.findById(id);
     }
+
+    public ChatEntity add(ChatEntity chatEntity) {
+        return chatJpaRepository.save(chatEntity);
+    }
 }

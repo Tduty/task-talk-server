@@ -19,7 +19,7 @@ public class MessageController {
         this.historyInteractor = historyInteractor;
     }
 
-    @GetMapping("/history/{uuid}")
+    @GetMapping(value = "/history/{chatId}")
     public List<MessageDTO> getByLessonId(@PathVariable String chatId) {
         return historyInteractor.get(chatId);
     }

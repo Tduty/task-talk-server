@@ -1,5 +1,7 @@
 package info.tduty.typetalkserver.data.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,8 @@ import javax.persistence.*;
 public class DictionaryEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     @Column(name="content")
@@ -77,9 +80,7 @@ public class DictionaryEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (translation != null ? !translation.equals(that.translation) : that.translation != null) return false;
-        if (transcription != null ? !transcription.equals(that.transcription) : that.transcription != null)
-            return false;
-        return lesson != null ? lesson.equals(that.lesson) : that.lesson == null;
+        return transcription != null ? !transcription.equals(that.transcription) : that.transcription != null;
     }
 
     @Override
@@ -88,7 +89,6 @@ public class DictionaryEntity {
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (translation != null ? translation.hashCode() : 0);
         result = 31 * result + (transcription != null ? transcription.hashCode() : 0);
-        result = 31 * result + (lesson != null ? lesson.hashCode() : 0);
         return result;
     }
 
@@ -99,7 +99,6 @@ public class DictionaryEntity {
                 ", content='" + content + '\'' +
                 ", translation='" + translation + '\'' +
                 ", transcription='" + transcription + '\'' +
-                ", lesson=" + lesson +
                 '}';
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import java.security.Principal;
 import java.util.Map;
-import java.util.UUID;
 
 @Configuration
 @EnableWebSocket
@@ -31,7 +30,9 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
                 .setHandshakeHandler(new DefaultHandshakeHandler() {
                     @Override
                     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-                        return new User(UUID.randomUUID().toString(), "TEST");
+                        String uuid = (String) request.getHeaders().get("id").get(0);
+                        String name = (String) attributes.get("name");
+                        return new User(uuid, name);
                     }
                 });
     }

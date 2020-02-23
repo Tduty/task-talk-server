@@ -11,6 +11,10 @@ public class TypingPayload implements EventPayload {
     @SerializedName("type")
     private String type;
 
+    public TypingPayload() {
+
+    }
+
     public TypingPayload(String senderId, String type) {
         this.senderId = senderId;
         this.type = type;
