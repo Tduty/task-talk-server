@@ -8,6 +8,9 @@ public class TypingPayload implements EventPayload {
     @SerializedName("sender_id")
     private String senderId;
 
+    @SerializedName("chat_id")
+    private String chatId;
+
     @SerializedName("type")
     private String type;
 
@@ -15,8 +18,9 @@ public class TypingPayload implements EventPayload {
 
     }
 
-    public TypingPayload(String senderId, String type) {
+    public TypingPayload(String senderId, String chatId, String type) {
         this.senderId = senderId;
+        this.chatId = chatId;
         this.type = type;
     }
 
@@ -26,6 +30,14 @@ public class TypingPayload implements EventPayload {
 
     public void setSenderId(String senderId) {
         this.senderId = senderId;
+    }
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 
     public String getType() {
@@ -44,12 +56,14 @@ public class TypingPayload implements EventPayload {
         TypingPayload that = (TypingPayload) o;
 
         if (senderId != null ? !senderId.equals(that.senderId) : that.senderId != null) return false;
+        if (chatId != null ? !chatId.equals(that.chatId) : that.chatId != null) return false;
         return type != null ? type.equals(that.type) : that.type == null;
     }
 
     @Override
     public int hashCode() {
         int result = senderId != null ? senderId.hashCode() : 0;
+        result = 31 * result + (chatId != null ? chatId.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
@@ -58,6 +72,7 @@ public class TypingPayload implements EventPayload {
     public String toString() {
         return "TypingPayload{" +
                 "senderId='" + senderId + '\'' +
+                ", chatId='" + chatId + '\'' +
                 ", type='" + type + '\'' +
                 '}';
     }
