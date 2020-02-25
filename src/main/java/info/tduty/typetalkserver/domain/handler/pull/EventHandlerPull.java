@@ -1,6 +1,10 @@
-package info.tduty.typetalkserver.domain;
+package info.tduty.typetalkserver.domain.handler.pull;
 
 import info.tduty.typetalkserver.data.event.EventPayload;
+import info.tduty.typetalkserver.domain.handler.EventHandler;
+import info.tduty.typetalkserver.domain.handler.LessonHandler;
+import info.tduty.typetalkserver.domain.handler.MessageNewHandler;
+import info.tduty.typetalkserver.domain.handler.TypingHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

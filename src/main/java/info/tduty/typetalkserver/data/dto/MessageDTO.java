@@ -1,9 +1,9 @@
-package info.tduty.typetalkserver.data.event.payload;
+package info.tduty.typetalkserver.data.dto;
 
 import com.google.gson.annotations.SerializedName;
-import info.tduty.typetalkserver.data.event.EventPayload;
+import info.tduty.typetalkserver.data.event.payload.MessageNewPayload;
 
-public class MessageNewPayload implements EventPayload {
+public class MessageDTO {
 
     @SerializedName("id")
     private String id;
@@ -23,11 +23,7 @@ public class MessageNewPayload implements EventPayload {
     @SerializedName("exist_mistake")
     private Boolean existMistake;
 
-    public MessageNewPayload() {
-
-    }
-
-    public MessageNewPayload(String id,
+    public MessageDTO(String id,
                              String chatId,
                              String senderId,
                              String body,
@@ -94,7 +90,7 @@ public class MessageNewPayload implements EventPayload {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MessageNewPayload that = (MessageNewPayload) o;
+        MessageDTO that = (MessageDTO) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (chatId != null ? !chatId.equals(that.chatId) : that.chatId != null) return false;
@@ -117,7 +113,7 @@ public class MessageNewPayload implements EventPayload {
 
     @Override
     public String toString() {
-        return "MessageNewPayload{" +
+        return "MessageDTO{" +
                 "id='" + id + '\'' +
                 ", chatId='" + chatId + '\'' +
                 ", senderId='" + senderId + '\'' +
