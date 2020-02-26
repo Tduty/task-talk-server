@@ -17,6 +17,12 @@ public class UserEntity {
     @Column(name="name")
     private String name;
 
+    @Column(name="password")
+    private String password;
+
+    @Column(name="enabled")
+    private Boolean enabled;
+
     @Column(name="sex")
     private String sex;
 
@@ -62,6 +68,22 @@ public class UserEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getSex() {
@@ -129,29 +151,48 @@ public class UserEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (enabled != null ? !enabled.equals(that.enabled) : that.enabled != null) return false;
         if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
         if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
-        return classEntity != null ? !classEntity.equals(that.classEntity) : that.classEntity != null;
+        if (messages != null ? !messages.equals(that.messages) : that.messages != null) return false;
+        if (chats != null ? !chats.equals(that.chats) : that.chats != null) return false;
+        if (classEntity != null ? !classEntity.equals(that.classEntity) : that.classEntity != null) return false;
+        if (completedLessons != null ? !completedLessons.equals(that.completedLessons) : that.completedLessons != null)
+            return false;
+        return executeLessons != null ? executeLessons.equals(that.executeLessons) : that.executeLessons == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (enabled != null ? enabled.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
+        result = 31 * result + (messages != null ? messages.hashCode() : 0);
+        result = 31 * result + (chats != null ? chats.hashCode() : 0);
         result = 31 * result + (classEntity != null ? classEntity.hashCode() : 0);
+        result = 31 * result + (completedLessons != null ? completedLessons.hashCode() : 0);
+        result = 31 * result + (executeLessons != null ? executeLessons.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "UserEntity{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
                 ", sex='" + sex + '\'' +
                 ", teacher=" + teacher +
+                ", messages=" + messages +
+                ", chats=" + chats +
                 ", classEntity=" + classEntity +
+                ", completedLessons=" + completedLessons +
+                ", executeLessons=" + executeLessons +
                 '}';
     }
 }

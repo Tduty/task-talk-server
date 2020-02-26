@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,8 @@ public class LessonController {
     }
 
     @GetMapping("/lessons")
-    public List<LessonDTO> get() {
+    public List<LessonDTO> get(Principal principal) {
+
         return lessonInteractor.getLessons(null);
     }
 
