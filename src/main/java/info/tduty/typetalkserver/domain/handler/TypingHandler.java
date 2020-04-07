@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -31,7 +32,7 @@ public class TypingHandler implements EventHandler<TypingPayload> {
     public void handle(User user, TypingPayload payload) {
         Optional<ChatEntity> chat = chatWrapper.get(payload.getChatId());
         if (chat.isPresent()) {
-            List<UserEntity> users = chat.get().getChatMembers();
+            Set<UserEntity> users = chat.get().getChatMembers();
             List<String> userIds = users.stream()
                     .map(UserEntity::getId)
                     .filter(id -> id.equals(user.getId()))

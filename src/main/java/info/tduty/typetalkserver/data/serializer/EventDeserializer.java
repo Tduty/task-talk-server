@@ -19,12 +19,12 @@ public class EventDeserializer implements JsonDeserializer<Event> {
 
     @Override
     public Event deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        Event event = gson.fromJson(json, Event.class);
-        JsonElement jsonElement = json.getAsJsonObject().get("payload");
+        String payloadType = json.getAsJsonObject().get("type").getAsString();
+        JsonElement jsonElement = json.getAsJsonObject().get("eventPayload");
 
         EventPayload payload;
 
-        switch (EventPayload.Type.to(event.getType())) {
+        switch (EventPayload.Type.to(payloadType)) {
             case MESSAGE_NEW:
                 payload = gson.fromJson(jsonElement, MessageNewPayload.class);
                 break;
@@ -39,8 +39,6 @@ public class EventDeserializer implements JsonDeserializer<Event> {
                 break;
         }
 
-        event.setEventPayload(payload);
-
-        return event;
+        return new Event(payloadType, payload);
     }
 }

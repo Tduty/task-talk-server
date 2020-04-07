@@ -37,8 +37,10 @@ public class EventSender {
         try {
             String jsonStr = gson.toJson(event);
             WebSocketSession session = sessionRegistry.get(userId);
-            synchronized(session) {
-                session.sendMessage(new TextMessage(jsonStr));
+            if (session != null) {
+                synchronized(session) {
+                    session.sendMessage(new TextMessage(jsonStr));
+                }
             }
             logger.debug("message sent to id: {}, type: {}, event: {}", userId, event.getType(), event);
         } catch (IOException e) {

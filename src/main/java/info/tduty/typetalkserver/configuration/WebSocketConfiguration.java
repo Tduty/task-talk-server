@@ -30,8 +30,8 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
                 .setHandshakeHandler(new DefaultHandshakeHandler() {
                     @Override
                     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-                        String uuid = (String) request.getHeaders().get("id").get(0);
-                        String name = (String) attributes.get("name");
+                        String uuid = request.getHeaders().get("id").get(0);
+                        String name = request.getHeaders().get("name").get(0);
                         return new User(uuid, name);
                     }
                 });

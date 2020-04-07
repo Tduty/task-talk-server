@@ -1,7 +1,6 @@
 package info.tduty.typetalkserver.data.dto;
 
 import com.google.gson.annotations.SerializedName;
-import info.tduty.typetalkserver.data.event.payload.MessageNewPayload;
 
 public class MessageDTO {
 
@@ -14,6 +13,9 @@ public class MessageDTO {
     @SerializedName("sender_id")
     private String senderId;
 
+    @SerializedName("sender_type")
+    private String senderType;
+
     @SerializedName("body")
     private String body;
 
@@ -24,14 +26,16 @@ public class MessageDTO {
     private Boolean existMistake;
 
     public MessageDTO(String id,
-                             String chatId,
-                             String senderId,
-                             String body,
-                             Long sendingTime,
-                             Boolean existMistake) {
+                      String chatId,
+                      String senderId,
+                      String senderType,
+                      String body,
+                      Long sendingTime,
+                      Boolean existMistake) {
         this.id = id;
         this.chatId = chatId;
         this.senderId = senderId;
+        this.senderType = senderType;
         this.body = body;
         this.sendingTime = sendingTime;
         this.existMistake = existMistake;
@@ -59,6 +63,14 @@ public class MessageDTO {
 
     public void setSenderId(String senderId) {
         this.senderId = senderId;
+    }
+
+    public String getSenderType() {
+        return senderType;
+    }
+
+    public void setSenderType(String senderType) {
+        this.senderType = senderType;
     }
 
     public String getBody() {
@@ -95,6 +107,7 @@ public class MessageDTO {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (chatId != null ? !chatId.equals(that.chatId) : that.chatId != null) return false;
         if (senderId != null ? !senderId.equals(that.senderId) : that.senderId != null) return false;
+        if (senderType != null ? !senderType.equals(that.senderType) : that.senderType != null) return false;
         if (body != null ? !body.equals(that.body) : that.body != null) return false;
         if (sendingTime != null ? !sendingTime.equals(that.sendingTime) : that.sendingTime != null) return false;
         return existMistake != null ? existMistake.equals(that.existMistake) : that.existMistake == null;
@@ -105,6 +118,7 @@ public class MessageDTO {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (chatId != null ? chatId.hashCode() : 0);
         result = 31 * result + (senderId != null ? senderId.hashCode() : 0);
+        result = 31 * result + (senderType != null ? senderType.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
         result = 31 * result + (sendingTime != null ? sendingTime.hashCode() : 0);
         result = 31 * result + (existMistake != null ? existMistake.hashCode() : 0);
@@ -117,6 +131,7 @@ public class MessageDTO {
                 "id='" + id + '\'' +
                 ", chatId='" + chatId + '\'' +
                 ", senderId='" + senderId + '\'' +
+                ", senderType='" + senderType + '\'' +
                 ", body='" + body + '\'' +
                 ", sendingTime=" + sendingTime +
                 ", existMistake=" + existMistake +

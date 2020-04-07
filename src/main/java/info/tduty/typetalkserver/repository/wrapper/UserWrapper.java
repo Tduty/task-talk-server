@@ -27,6 +27,10 @@ public class UserWrapper {
         return userJpaRepository.findById(id);
     }
 
+    public Optional<UserEntity> getByUsername(String username) {
+        return Optional.of(userJpaRepository.findByUsername(username));
+    }
+
     public boolean isExist(String id) {
         return userJpaRepository.existsById(id);
     }
@@ -35,11 +39,26 @@ public class UserWrapper {
         return userJpaRepository.save(user);
     }
 
+    public Iterable<UserEntity> addList(List<UserEntity> users) {
+        Iterable<UserEntity> result = userJpaRepository.saveAll(users);
+        saveRuleUser(result);
+        return result;
+    }
+
     public UserEntity add(UserEntity user, String rule) {
         AuthorityEntity authority = new AuthorityEntity();
         authority.setName(user.getName());
         authority.setAuthority(rule);
         authorityJpaRepository.save(authority);
         return userJpaRepository.save(user);
+    }
+
+    private void saveRuleUser(Iterable<UserEntity> users) {
+        for (UserEntity user : users) {
+            AuthorityEntity authority = new AuthorityEntity();
+            authority.setName(user.getName());
+            authority.setAuthority("ROLE_USER");
+            authorityJpaRepository.save(authority);
+        }
     }
 }

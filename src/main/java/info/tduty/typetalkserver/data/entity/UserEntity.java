@@ -14,7 +14,7 @@ public class UserEntity {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
-    @Column(name="name")
+    @Column(name="name", unique = true)
     private String name;
 
     @Column(name="password")
@@ -29,7 +29,7 @@ public class UserEntity {
     @Column(name="teacher")
     private Boolean teacher;
 
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sender", fetch = FetchType.EAGER)
     private Set<MessageEntity> messages;
 
     @ManyToMany(mappedBy="chatMembers", fetch = FetchType.EAGER)
@@ -154,13 +154,7 @@ public class UserEntity {
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (enabled != null ? !enabled.equals(that.enabled) : that.enabled != null) return false;
         if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
-        if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
-        if (messages != null ? !messages.equals(that.messages) : that.messages != null) return false;
-        if (chats != null ? !chats.equals(that.chats) : that.chats != null) return false;
-        if (classEntity != null ? !classEntity.equals(that.classEntity) : that.classEntity != null) return false;
-        if (completedLessons != null ? !completedLessons.equals(that.completedLessons) : that.completedLessons != null)
-            return false;
-        return executeLessons != null ? executeLessons.equals(that.executeLessons) : that.executeLessons == null;
+        return teacher != null ? !teacher.equals(that.teacher) : that.teacher != null;
     }
 
     @Override
@@ -171,11 +165,6 @@ public class UserEntity {
         result = 31 * result + (enabled != null ? enabled.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
-        result = 31 * result + (messages != null ? messages.hashCode() : 0);
-        result = 31 * result + (chats != null ? chats.hashCode() : 0);
-        result = 31 * result + (classEntity != null ? classEntity.hashCode() : 0);
-        result = 31 * result + (completedLessons != null ? completedLessons.hashCode() : 0);
-        result = 31 * result + (executeLessons != null ? executeLessons.hashCode() : 0);
         return result;
     }
 
@@ -188,11 +177,6 @@ public class UserEntity {
                 ", enabled=" + enabled +
                 ", sex='" + sex + '\'' +
                 ", teacher=" + teacher +
-                ", messages=" + messages +
-                ", chats=" + chats +
-                ", classEntity=" + classEntity +
-                ", completedLessons=" + completedLessons +
-                ", executeLessons=" + executeLessons +
                 '}';
     }
 }

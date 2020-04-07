@@ -22,10 +22,13 @@ public class MessageEntity {
     @Column(name="avatar_url")
     private String avatar;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name="time")
+    private long time;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private ChatEntity chat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity sender;
 
     public String getId() {
@@ -60,6 +63,14 @@ public class MessageEntity {
         this.avatar = avatar;
     }
 
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     public ChatEntity getChat() {
         return chat;
     }
@@ -83,12 +94,11 @@ public class MessageEntity {
 
         MessageEntity that = (MessageEntity) o;
 
+        if (time != that.time) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (syncId != null ? !syncId.equals(that.syncId) : that.syncId != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        if (chat != null ? !chat.equals(that.chat) : that.chat != null) return false;
-        return sender != null ? sender.equals(that.sender) : that.sender == null;
+        return avatar != null ? !avatar.equals(that.avatar) : that.avatar != null;
     }
 
     @Override
@@ -97,8 +107,7 @@ public class MessageEntity {
         result = 31 * result + (syncId != null ? syncId.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (chat != null ? chat.hashCode() : 0);
-        result = 31 * result + (sender != null ? sender.hashCode() : 0);
+        result = 31 * result + (int) (time ^ (time >>> 32));
         return result;
     }
 
@@ -109,8 +118,7 @@ public class MessageEntity {
                 ", syncId='" + syncId + '\'' +
                 ", content='" + content + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", chat=" + chat +
-                ", sender=" + sender +
+                ", time=" + time +
                 '}';
     }
 }

@@ -22,12 +22,11 @@ public class LessonController {
 
     @GetMapping("/lessons")
     public List<LessonDTO> get(Principal principal) {
-
-        return lessonInteractor.getLessons(null);
+        return lessonInteractor.getLessons(principal.getName());
     }
 
     @GetMapping("/lessons/{uuid}")
-    public LessonDTO getByLessonId(@PathVariable String uuid) {
-        return lessonInteractor.getLessonById(null, uuid);
+    public LessonDTO getByLessonId(@PathVariable String uuid, Principal principal) {
+        return lessonInteractor.getLessonById(principal.getName(), uuid);
     }
 }

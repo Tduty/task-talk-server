@@ -15,6 +15,9 @@ public class ChatEntity {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
+    @Column(name="type")
+    private String type;
+
     @Column(name="title")
     private String title;
 
@@ -24,7 +27,7 @@ public class ChatEntity {
     @Column(name="avatar_url")
     private String avatar;
 
-    @OneToMany(mappedBy="chat", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="chat", fetch = FetchType.EAGER)
     private Set<MessageEntity> messages;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -33,7 +36,7 @@ public class ChatEntity {
             joinColumns = { @JoinColumn(name = "ID_CHAT") },
             inverseJoinColumns = { @JoinColumn(name = "ID_USER") }
     )
-    private List<UserEntity> chatMembers;
+    private Set<UserEntity> chatMembers;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ClassEntity classEntity;
@@ -44,6 +47,14 @@ public class ChatEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -78,11 +89,11 @@ public class ChatEntity {
         this.messages = messages;
     }
 
-    public List<UserEntity> getChatMembers() {
+    public Set<UserEntity> getChatMembers() {
         return chatMembers;
     }
 
-    public void setChatMembers(List<UserEntity> chatMembers) {
+    public void setChatMembers(Set<UserEntity> chatMembers) {
         this.chatMembers = chatMembers;
     }
 
@@ -102,30 +113,30 @@ public class ChatEntity {
         ChatEntity that = (ChatEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        return classEntity != null ? classEntity.equals(that.classEntity) : that.classEntity == null;
+        return avatar != null ? !avatar.equals(that.avatar) : that.avatar != null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (classEntity != null ? classEntity.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "ChatEntity{" +
-                "id=" + id +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", classEntity=" + classEntity +
                 '}';
     }
 }
