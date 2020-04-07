@@ -2,6 +2,7 @@ package info.tduty.typetalkserver.domain.mapper;
 
 import info.tduty.typetalkserver.data.dto.MessageDTO;
 import info.tduty.typetalkserver.data.entity.MessageEntity;
+import info.tduty.typetalkserver.data.entity.UserEntity;
 import info.tduty.typetalkserver.data.event.Event;
 import info.tduty.typetalkserver.data.event.EventPayload;
 import info.tduty.typetalkserver.data.event.payload.MessageNewPayload;
@@ -30,6 +31,7 @@ public class MessageMapper {
         message.setContent(payload.getBody());
         message.setChat(chatWrapper.get(payload.getChatId()).orElse(null));
         message.setSender(userWrapper.get(payload.getSenderId()).orElse(null));
+        message.setTime(new Date().getTime());
         return message;
     }
 
@@ -38,8 +40,9 @@ public class MessageMapper {
                 message.getSyncId(),
                 message.getChat().getId(),
                 message.getSender().getId(),
+                getSenderType(message.getSender()),
                 message.getContent(),
-                new Date().getTime(),
+                message.getTime(),
                 false
         );
         return new Event(EventPayload.Type.MESSAGE_NEW.getString(), payload);
@@ -50,10 +53,17 @@ public class MessageMapper {
                 message.getSyncId(),
                 message.getChat().getId(),
                 message.getSender().getId(),
+                getSenderType(message.getSender()),
                 message.getContent(),
                 new Date().getTime(),
                 false
         );
         return dto;
+    }
+
+    private String getSenderType(UserEntity user) {
+        String type = user.getSex();
+        if (user.getTeacher()) type = "teacher";
+        return type;
     }
 }

@@ -15,6 +15,6 @@ public interface MessageJpaRepository extends CrudRepository<MessageEntity, Stri
             nativeQuery = true)
     List<MessageEntity> findByChatId(String chatId);
 
-    @Query(value = "SELECT m FROM Message WHERE sync_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM Message WHERE sync_id = ?1", nativeQuery = true)
     MessageEntity findBySyncId(String syncId);
 }

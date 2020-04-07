@@ -27,14 +27,14 @@ public class LessonInteractor {
         this.lessonMapper = lessonMapper;
     }
 
-    public List<LessonDTO> getLessons(User user) {
-        UserEntity userEntity = userWrapper.get(user.getId()).orElseThrow(IllegalArgumentException::new);
+    public List<LessonDTO> getLessons(String username) {
+        UserEntity userEntity = userWrapper.getByUsername(username).orElseThrow(IllegalArgumentException::new);
         List<LessonEntity> lessons = lessonWrapper.getByClassId(userEntity.getClassEntity().getId());
         return lessons.stream().map(lesson -> lessonMapper.dbToDto(userEntity, lesson)).collect(Collectors.toList());
     }
 
-    public LessonDTO getLessonById(User user, String lessonId) {
-        UserEntity userEntity = userWrapper.get(user.getId()).orElseThrow(IllegalArgumentException::new);
+    public LessonDTO getLessonById(String username, String lessonId) {
+        UserEntity userEntity = userWrapper.getByUsername(username).orElseThrow(IllegalArgumentException::new);
         LessonEntity lesson = lessonWrapper.getByLessonId(lessonId).orElseThrow(IllegalArgumentException::new);
         return lessonMapper.dbToDto(userEntity, lesson);
     }

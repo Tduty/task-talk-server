@@ -14,8 +14,14 @@ public class UserEntity {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
-    @Column(name="name")
+    @Column(name="name", unique = true)
     private String name;
+
+    @Column(name="password")
+    private String password;
+
+    @Column(name="enabled")
+    private Boolean enabled;
 
     @Column(name="sex")
     private String sex;
@@ -23,7 +29,7 @@ public class UserEntity {
     @Column(name="teacher")
     private Boolean teacher;
 
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sender", fetch = FetchType.EAGER)
     private Set<MessageEntity> messages;
 
     @ManyToMany(mappedBy="chatMembers", fetch = FetchType.EAGER)
@@ -62,6 +68,22 @@ public class UserEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getSex() {
@@ -129,29 +151,32 @@ public class UserEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (enabled != null ? !enabled.equals(that.enabled) : that.enabled != null) return false;
         if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
-        if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
-        return classEntity != null ? !classEntity.equals(that.classEntity) : that.classEntity != null;
+        return teacher != null ? !teacher.equals(that.teacher) : that.teacher != null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (enabled != null ? enabled.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
-        result = 31 * result + (classEntity != null ? classEntity.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "UserEntity{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
                 ", sex='" + sex + '\'' +
                 ", teacher=" + teacher +
-                ", classEntity=" + classEntity +
                 '}';
     }
 }

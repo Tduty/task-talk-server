@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -37,10 +38,10 @@ public class MessageNewHandler implements EventHandler<MessageNewPayload> {
     @Override
     public void handle(User user, MessageNewPayload payload) {
         MessageEntity message = messageMapper.payloadToDB(payload);
-        messageWrapper.add(message);
-        Optional<ChatEntity> chat = chatWrapper.get(payload.getChatId());
-        if (chat.isPresent()) {
-            List<UserEntity> users = chat.get().getChatMembers();
+        MessageEntity messageNew = messageWrapper.add(message);
+        ChatEntity chat = messageNew.getChat();
+        if (chat != null) {
+            Set<UserEntity> users = chat.getChatMembers();
             List<String> userIds = users.stream().map(UserEntity::getId).collect(Collectors.toList());
             eventSender.send(userIds, messageMapper.dbToEvent(message));
         }

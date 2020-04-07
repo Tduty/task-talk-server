@@ -3,9 +3,11 @@ package info.tduty.typetalkserver.domain.mapper;
 import info.tduty.typetalkserver.data.dto.LessonDTO;
 import info.tduty.typetalkserver.data.entity.LessonEntity;
 import info.tduty.typetalkserver.data.entity.UserEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
+@Component
 public class LessonMapper {
 
     public LessonDTO dbToDto(UserEntity user, LessonEntity lesson) {

@@ -4,12 +4,14 @@ import info.tduty.typetalkserver.data.entity.ClassEntity;
 import info.tduty.typetalkserver.data.entity.LessonEntity;
 import info.tduty.typetalkserver.repository.jpa.LessonJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Repository
 public class LessonWrapper {
 
     private LessonJpaRepository lessonJpaRepository;
