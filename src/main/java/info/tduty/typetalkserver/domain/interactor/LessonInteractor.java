@@ -44,7 +44,11 @@ public class LessonInteractor {
         if (classEntity == null) return;
         LessonEntity lesson = lessonWrapper.getByLessonId(lessonId).orElse(null);
         if (lesson == null) return;
-        lesson.getClasses().add(classEntity);
+        if (lesson.getClasses() == null) {
+            Set<ClassEntity> classEntities = new HashSet<>();
+            classEntities.add(classEntity);
+            lesson.setClasses(classEntities);
+        } else lesson.getClasses().add(classEntity);
         LessonEntity lessonEntity = lessonWrapper.save(lesson);
         generateLessonForAllUsers(lessonEntity, classEntity.getStudents());
     }
@@ -55,22 +59,25 @@ public class LessonInteractor {
             LessonProgressEntity lessonProgress = new LessonProgressEntity();
             lessonProgress.setLesson(lesson);
             lessonProgress.setExecutor(user);
-            lessonProgress.setTasksProgress(generateTasksProgress(lesson, user));
             lessonProgress.setStatus(0);
             lessonsProgress.add(lessonProgress);
         }
-        lessonWrapper.saveProgress(lessonsProgress);
+        Iterable<LessonProgressEntity> newLesson = lessonWrapper.saveProgress(lessonsProgress);
+        for (LessonProgressEntity lessonProgress : newLesson) {
+            generateTasksProgress(lessonProgress, lessonProgress.getExecutor());
+        }
     }
 
-    public Set<TaskProgressEntity> generateTasksProgress(LessonEntity lessonEntity, UserEntity user) {
-        Set<TaskProgressEntity> tasks = new HashSet<>();
-        for (TaskEntity taskEntity : lessonEntity.getTasks()) {
+    public void generateTasksProgress(LessonProgressEntity lessonEntity, UserEntity user) {
+        List<TaskProgressEntity> tasks = new ArrayList<>();
+        for (TaskEntity taskEntity : lessonEntity.getLesson().getTasks()) {
             TaskProgressEntity taskProgress = new TaskProgressEntity();
+            taskProgress.setLessonProgress(lessonEntity);
             taskProgress.setTask(taskEntity);
             taskProgress.setExecutor(user);
             taskProgress.setStatus(0);
             tasks.add(taskProgress);
         }
-        return tasks;
+        lessonWrapper.saveTaskProgress(tasks);
     }
 }

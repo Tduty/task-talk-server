@@ -35,6 +35,10 @@ public class DictionaryWrapper {
         this.lessonProgressJpaRepository = lessonProgressJpaRepository;
     }
 
+    public Iterable<DictionaryEntity> save(List<DictionaryEntity> dictionaries) {
+        return dictionaryJpaRepository.saveAll(dictionaries);
+    }
+
     public List<DictionaryEntity> getAllByUsername(String username) {
         UserEntity user = userJpaRepository.findByUsername(username);
         if (user == null) return Collections.emptyList();
@@ -49,10 +53,10 @@ public class DictionaryWrapper {
         return dictionaries;
     }
 
-    public List<DictionaryEntity> getByLessonId(String lessonId) {
+    public Set<DictionaryEntity> getByLessonId(String lessonId) {
         LessonEntity lesson = lessonJpaRepository.findById(lessonId).orElse(null);
-        if (lesson == null) return Collections.emptyList();
-        if (lesson.getDictionaries() == null) return Collections.emptyList();
+        if (lesson == null) return Collections.emptySet();
+        if (lesson.getDictionaries() == null) return Collections.emptySet();
         return lesson.getDictionaries();
     }
 }

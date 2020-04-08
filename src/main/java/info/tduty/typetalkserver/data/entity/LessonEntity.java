@@ -24,14 +24,14 @@ public class LessonEntity {
     @Column(name="description")
     private String description;
 
-    @ManyToMany(mappedBy="lessons")
+    @ManyToMany(mappedBy="lessons", fetch = FetchType.EAGER)
     private Set<ClassEntity> classes;
 
     @OneToMany(mappedBy="lesson", fetch = FetchType.EAGER)
-    private List<TaskEntity> tasks;
+    private Set<TaskEntity> tasks;
 
     @OneToMany(mappedBy="lesson", fetch = FetchType.EAGER)
-    private List<DictionaryEntity> dictionaries;
+    private Set<DictionaryEntity> dictionaries;
 
     public String getId() {
         return id;
@@ -73,19 +73,19 @@ public class LessonEntity {
         this.classes = classes;
     }
 
-    public List<TaskEntity> getTasks() {
+    public Set<TaskEntity> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskEntity> tasks) {
+    public void setTasks(Set<TaskEntity> tasks) {
         this.tasks = tasks;
     }
 
-    public List<DictionaryEntity> getDictionaries() {
+    public Set<DictionaryEntity> getDictionaries() {
         return dictionaries;
     }
 
-    public void setDictionaries(List<DictionaryEntity> dictionaries) {
+    public void setDictionaries(Set<DictionaryEntity> dictionaries) {
         this.dictionaries = dictionaries;
     }
 

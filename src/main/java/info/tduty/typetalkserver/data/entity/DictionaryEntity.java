@@ -22,12 +22,7 @@ public class DictionaryEntity {
     @Column(name="transcription")
     private String transcription;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "lesson",
-            joinColumns = @JoinColumn(name = "ID_DICTIONARY"),
-            inverseJoinColumns = @JoinColumn(name = "ID_LESSON")
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
     private LessonEntity lesson;
 
     public String getId() {

@@ -14,7 +14,7 @@ public class LessonProgressEntity {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
     private LessonEntity lesson;
 

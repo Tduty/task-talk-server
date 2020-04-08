@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,7 +26,7 @@ public class DictionaryInteractor {
     }
 
     public List<DictionaryDTO> getByLessonId(String lessonId) {
-        List<DictionaryEntity> dictionaries = dictionaryWrapper.getByLessonId(lessonId);
+        Set<DictionaryEntity> dictionaries = dictionaryWrapper.getByLessonId(lessonId);
         return dictionaries.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 

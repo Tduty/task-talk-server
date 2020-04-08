@@ -36,8 +36,17 @@ public class LessonWrapper {
         return lessonJpaRepository.save(lesson);
     }
 
-    public void saveProgress(List<LessonProgressEntity> lessons) {
-        lessonProgressJpaRepository.saveAll(lessons);
+    public Iterable<TaskEntity> saveTasks(List<TaskEntity> tasks) {
+        return taskJpaRepository.saveAll(tasks);
+    }
+
+
+    public Iterable<LessonProgressEntity> saveProgress(List<LessonProgressEntity> lessons) {
+        return lessonProgressJpaRepository.saveAll(lessons);
+    }
+
+    public void saveTaskProgress(List<TaskProgressEntity> tasks) {
+        taskProgressJpaRepository.saveAll(tasks);
     }
 
     public List<LessonEntity> getByClassId(String classId) {

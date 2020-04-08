@@ -1,6 +1,9 @@
 package info.tduty.typetalkserver.repository.jpa;
 
+import info.tduty.typetalkserver.data.entity.TaskProgressEntity;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TaskProgressJpaRepository extends CrudRepository<TaskProgressJpaRepository, String> {
+@Repository
+public interface TaskProgressJpaRepository extends CrudRepository<TaskProgressEntity, String> {
 }
