@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Lesson")
@@ -24,18 +25,12 @@ public class LessonEntity {
     private String description;
 
     @ManyToMany(mappedBy="lessons")
-    private List<ClassEntity> classes;
+    private Set<ClassEntity> classes;
 
-    @ManyToMany(mappedBy="completedLessons")
-    private List<UserEntity> completed;
-
-    @ManyToMany(mappedBy="executeLessons")
-    private List<UserEntity> execute;
-
-    @OneToMany(mappedBy="lesson", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="lesson", fetch = FetchType.EAGER)
     private List<TaskEntity> tasks;
 
-    @OneToMany(mappedBy="lesson", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="lesson", fetch = FetchType.EAGER)
     private List<DictionaryEntity> dictionaries;
 
     public String getId() {
@@ -70,28 +65,12 @@ public class LessonEntity {
         this.description = description;
     }
 
-    public List<ClassEntity> getClasses() {
+    public Set<ClassEntity> getClasses() {
         return classes;
     }
 
-    public void setClasses(List<ClassEntity> classes) {
+    public void setClasses(Set<ClassEntity> classes) {
         this.classes = classes;
-    }
-
-    public List<UserEntity> getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(List<UserEntity> completed) {
-        this.completed = completed;
-    }
-
-    public List<UserEntity> getExecute() {
-        return execute;
-    }
-
-    public void setExecute(List<UserEntity> execute) {
-        this.execute = execute;
     }
 
     public List<TaskEntity> getTasks() {

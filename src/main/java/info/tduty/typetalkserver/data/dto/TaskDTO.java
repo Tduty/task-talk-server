@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class TaskDTO {
 
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("icon")
     private String icon;
 
@@ -13,10 +16,19 @@ public class TaskDTO {
     @SerializedName("status")
     private int status;
 
-    public TaskDTO(String icon, String title, int status) {
+    public TaskDTO(String id, String icon, String title, int status) {
+        this.id = id;
         this.icon = icon;
         this.title = title;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getIcon() {
@@ -51,13 +63,15 @@ public class TaskDTO {
         TaskDTO taskDTO = (TaskDTO) o;
 
         if (status != taskDTO.status) return false;
+        if (id != null ? !id.equals(taskDTO.id) : taskDTO.id != null) return false;
         if (icon != null ? !icon.equals(taskDTO.icon) : taskDTO.icon != null) return false;
         return title != null ? title.equals(taskDTO.title) : taskDTO.title == null;
     }
 
     @Override
     public int hashCode() {
-        int result = icon != null ? icon.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (icon != null ? icon.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + status;
         return result;
@@ -66,7 +80,8 @@ public class TaskDTO {
     @Override
     public String toString() {
         return "TaskDTO{" +
-                "icon='" + icon + '\'' +
+                "id='" + id + '\'' +
+                ", icon='" + icon + '\'' +
                 ", title='" + title + '\'' +
                 ", status=" + status +
                 '}';
