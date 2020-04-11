@@ -1,11 +1,7 @@
 package info.tduty.typetalkserver.domain.interactor;
 
-import info.tduty.typetalkserver.data.entity.ChatEntity;
-import info.tduty.typetalkserver.data.entity.ClassEntity;
-import info.tduty.typetalkserver.data.entity.UserEntity;
-import info.tduty.typetalkserver.repository.wrapper.ChatWrapper;
-import info.tduty.typetalkserver.repository.wrapper.ClassWrapper;
-import info.tduty.typetalkserver.repository.wrapper.UserWrapper;
+import info.tduty.typetalkserver.data.entity.*;
+import info.tduty.typetalkserver.repository.wrapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -21,15 +17,26 @@ public class DefaultClassInteractor {
     private ClassWrapper classWrapper;
     private UserWrapper userWrapper;
     private ChatWrapper chatWrapper;
+    private LessonWrapper lessonWrapper;
+    private DictionaryWrapper dictionaryWrapper;
     private PasswordEncoder passwordEncoder;
+    private LessonInteractor lessonInteractor;
 
     @Autowired
-    public DefaultClassInteractor(ClassWrapper classWrapper, UserWrapper userWrapper,
-                                  ChatWrapper chatWrapper, PasswordEncoder passwordEncoder) {
+    public DefaultClassInteractor(ClassWrapper classWrapper,
+                                  UserWrapper userWrapper,
+                                  ChatWrapper chatWrapper,
+                                  LessonWrapper lessonWrapper,
+                                  DictionaryWrapper dictionaryWrapper,
+                                  PasswordEncoder passwordEncoder,
+                                  LessonInteractor lessonInteractor) {
         this.classWrapper = classWrapper;
         this.userWrapper = userWrapper;
         this.chatWrapper = chatWrapper;
+        this.lessonWrapper = lessonWrapper;
+        this.dictionaryWrapper = dictionaryWrapper;
         this.passwordEncoder = passwordEncoder;
+        this.lessonInteractor = lessonInteractor;
         init();
     }
 
@@ -39,6 +46,7 @@ public class DefaultClassInteractor {
 
         generateClassChat(classEntity, users);
         generateTeacherChats(classEntity, users);
+        generateLesson(classEntity);
     }
 
     private ClassEntity createClass() {
@@ -108,5 +116,61 @@ public class DefaultClassInteractor {
             chat.setClassEntity(classEntity);
             chatWrapper.add(chat);
         }
+    }
+
+    private void generateLesson(ClassEntity classEntity) {
+        String lessonId = generateLesson();
+        lessonInteractor.addLessonToClass(classEntity.getId(), lessonId);
+    }
+
+    private String generateLesson() {
+        LessonEntity lesson = new LessonEntity();
+        lesson.setTitle("Weather");
+        lesson.setDescription("Description");
+        LessonEntity lessonNew = lessonWrapper.save(lesson);
+        generateDictionaries(lessonNew);
+        generateTasks(lessonNew);
+        return lessonNew.getId();
+    }
+
+    private void generateTasks(LessonEntity lesson) {
+        List<TaskEntity> tasks = new ArrayList<>();
+        tasks.add(generateTask("Flashcards", "", 0, "flashcards", lesson));
+        tasks.add(generateTask("Wordamess", "", 1, "wordamess", lesson));
+        tasks.add(generateTask("Hurry up", "", 2, "hurry_up", lesson));
+        tasks.add(generateTask("Phrase-Building", "", 3, "phrase_building", lesson));
+        tasks.add(generateTask("Translation", "", 4, "translation", lesson));
+        tasks.add(generateTask("Dictionary Pictionary", "", 5, "dictionary_pictionary", lesson));
+        lessonWrapper.saveTasks(tasks);
+    }
+
+    private TaskEntity generateTask(String title, String content, int postion, String type, LessonEntity lesson) {
+        TaskEntity task = new TaskEntity();
+        task.setTitle(title);
+        task.setContent(content);
+        task.setPosition(postion);
+        task.setType(type);
+        task.setLesson(lesson);
+        return task;
+    }
+
+    private void generateDictionaries(LessonEntity lesson) {
+        List<DictionaryEntity> dictionaries = new ArrayList<>();
+        dictionaries.add(generateDictionary("content", "transcription", "translation", lesson));
+        dictionaries.add(generateDictionary("content1", "transcription1", "translation1", lesson));
+        dictionaries.add(generateDictionary("content2", "transcription2", "translation2", lesson));
+        dictionaries.add(generateDictionary("content3", "transcription3", "translation3", lesson));
+        dictionaries.add(generateDictionary("content4", "transcription4", "translation4", lesson));
+        dictionaries.add(generateDictionary("content5", "transcription5", "translation5", lesson));
+        dictionaryWrapper.save(dictionaries);
+    }
+
+    private DictionaryEntity generateDictionary(String content, String transcription, String translation, LessonEntity lesson) {
+        DictionaryEntity dictionary = new DictionaryEntity();
+        dictionary.setContent(content);
+        dictionary.setTranscription(transcription);
+        dictionary.setTranslation(translation);
+        dictionary.setLesson(lesson);
+        return dictionary;
     }
 }

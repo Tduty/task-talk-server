@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Lesson")
@@ -23,20 +24,14 @@ public class LessonEntity {
     @Column(name="description")
     private String description;
 
-    @ManyToMany(mappedBy="lessons")
-    private List<ClassEntity> classes;
+    @ManyToMany(mappedBy="lessons", fetch = FetchType.EAGER)
+    private Set<ClassEntity> classes;
 
-    @ManyToMany(mappedBy="completedLessons")
-    private List<UserEntity> completed;
+    @OneToMany(mappedBy="lesson", fetch = FetchType.EAGER)
+    private Set<TaskEntity> tasks;
 
-    @ManyToMany(mappedBy="executeLessons")
-    private List<UserEntity> execute;
-
-    @OneToMany(mappedBy="lesson", fetch = FetchType.LAZY)
-    private List<TaskEntity> tasks;
-
-    @OneToMany(mappedBy="lesson", fetch = FetchType.LAZY)
-    private List<DictionaryEntity> dictionaries;
+    @OneToMany(mappedBy="lesson", fetch = FetchType.EAGER)
+    private Set<DictionaryEntity> dictionaries;
 
     public String getId() {
         return id;
@@ -70,43 +65,27 @@ public class LessonEntity {
         this.description = description;
     }
 
-    public List<ClassEntity> getClasses() {
+    public Set<ClassEntity> getClasses() {
         return classes;
     }
 
-    public void setClasses(List<ClassEntity> classes) {
+    public void setClasses(Set<ClassEntity> classes) {
         this.classes = classes;
     }
 
-    public List<UserEntity> getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(List<UserEntity> completed) {
-        this.completed = completed;
-    }
-
-    public List<UserEntity> getExecute() {
-        return execute;
-    }
-
-    public void setExecute(List<UserEntity> execute) {
-        this.execute = execute;
-    }
-
-    public List<TaskEntity> getTasks() {
+    public Set<TaskEntity> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskEntity> tasks) {
+    public void setTasks(Set<TaskEntity> tasks) {
         this.tasks = tasks;
     }
 
-    public List<DictionaryEntity> getDictionaries() {
+    public Set<DictionaryEntity> getDictionaries() {
         return dictionaries;
     }
 
-    public void setDictionaries(List<DictionaryEntity> dictionaries) {
+    public void setDictionaries(Set<DictionaryEntity> dictionaries) {
         this.dictionaries = dictionaries;
     }
 

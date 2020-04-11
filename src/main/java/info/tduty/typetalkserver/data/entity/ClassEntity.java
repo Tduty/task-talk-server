@@ -21,10 +21,10 @@ public class ClassEntity {
     @Column(name="avatar")
     private String avatar;
 
-    @OneToMany(mappedBy="classEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="classEntity", fetch = FetchType.EAGER)
     private List<UserEntity> students;
 
-    @OneToMany(mappedBy="classEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="classEntity", fetch = FetchType.EAGER)
     private List<ChatEntity> chats;
 
     @ManyToMany(cascade = { CascadeType.ALL })

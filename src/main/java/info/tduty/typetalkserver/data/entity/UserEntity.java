@@ -38,21 +38,11 @@ public class UserEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private ClassEntity classEntity;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "UserCompleted_to_Lesson",
-            joinColumns = { @JoinColumn(name = "ID_USER") },
-            inverseJoinColumns = { @JoinColumn(name = "ID_LESSON_COMPLETED") }
-    )
-    private Set<LessonEntity> completedLessons;
+    @OneToMany(mappedBy = "executor", fetch = FetchType.EAGER)
+    private Set<LessonProgressEntity> lessons;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "UserExecute_to_Lesson",
-            joinColumns = { @JoinColumn(name = "ID_USER") },
-            inverseJoinColumns = { @JoinColumn(name = "ID_LESSON_EXECUTE") }
-    )
-    private Set<LessonEntity> executeLessons;
+    @OneToMany(mappedBy = "executor", fetch = FetchType.EAGER)
+    private Set<TaskProgressEntity> tasks;
 
     public String getId() {
         return id;
@@ -126,20 +116,20 @@ public class UserEntity {
         this.classEntity = classEntity;
     }
 
-    public Set<LessonEntity> getCompletedLessons() {
-        return completedLessons;
+    public Set<LessonProgressEntity> getLessons() {
+        return lessons;
     }
 
-    public void setCompletedLessons(Set<LessonEntity> completedLessons) {
-        this.completedLessons = completedLessons;
+    public void setLessons(Set<LessonProgressEntity> lessons) {
+        this.lessons = lessons;
     }
 
-    public Set<LessonEntity> getExecuteLessons() {
-        return executeLessons;
+    public Set<TaskProgressEntity> getTasks() {
+        return tasks;
     }
 
-    public void setExecuteLessons(Set<LessonEntity> executeLessons) {
-        this.executeLessons = executeLessons;
+    public void setTasks(Set<TaskProgressEntity> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
