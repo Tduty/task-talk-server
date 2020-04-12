@@ -22,13 +22,18 @@ public class TaskDTO {
     @SerializedName("status")
     private int status;
 
-    public TaskDTO(String id, String icon, String title, String type, int position, int status) {
+    @SerializedName("payload")
+    private String payload;
+
+
+    public TaskDTO(String id, String icon, String title, String type, int position, int status, String payload) {
         this.id = id;
         this.icon = icon;
         this.title = title;
         this.type = type;
         this.position = position;
         this.status = status;
+        this.payload = payload;
     }
 
     public String getId() {
@@ -79,6 +84,14 @@ public class TaskDTO {
         this.status = status;
     }
 
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
     @Override
     public String toString() {
         return "TaskDTO{" +
@@ -88,6 +101,7 @@ public class TaskDTO {
                 ", type='" + type + '\'' +
                 ", position=" + position +
                 ", status=" + status +
+                ", payload=" + payload +
                 '}';
     }
 }
