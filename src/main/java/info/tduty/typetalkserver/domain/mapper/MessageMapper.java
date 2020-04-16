@@ -40,6 +40,7 @@ public class MessageMapper {
                 message.getSyncId(),
                 message.getChat().getId(),
                 message.getSender().getId(),
+                message.getSender().getName(),
                 getSenderType(message.getSender()),
                 message.getContent(),
                 message.getTime(),
@@ -53,9 +54,10 @@ public class MessageMapper {
                 message.getSyncId(),
                 message.getChat().getId(),
                 message.getSender().getId(),
+                message.getSender().getName(),
                 getSenderType(message.getSender()),
                 message.getContent(),
-                new Date().getTime(),
+                message.getTime(),
                 false
         );
         return dto;
