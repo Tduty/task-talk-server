@@ -22,13 +22,17 @@ public class TaskDTO {
     @SerializedName("status")
     private int status;
 
-    public TaskDTO(String id, String icon, String title, String type, int position, int status) {
+    @SerializedName("payload")
+    private String payload;
+
+    public TaskDTO(String id, String icon, String title, String type, int position, int status, String payload) {
         this.id = id;
         this.icon = icon;
         this.title = title;
         this.type = type;
         this.position = position;
         this.status = status;
+        this.payload = payload;
     }
 
     public String getId() {
@@ -79,6 +83,42 @@ public class TaskDTO {
         this.status = status;
     }
 
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TaskDTO taskDTO = (TaskDTO) o;
+
+        if (position != taskDTO.position) return false;
+        if (status != taskDTO.status) return false;
+        if (id != null ? !id.equals(taskDTO.id) : taskDTO.id != null) return false;
+        if (icon != null ? !icon.equals(taskDTO.icon) : taskDTO.icon != null) return false;
+        if (title != null ? !title.equals(taskDTO.title) : taskDTO.title != null) return false;
+        if (type != null ? !type.equals(taskDTO.type) : taskDTO.type != null) return false;
+        return payload != null ? payload.equals(taskDTO.payload) : taskDTO.payload == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (icon != null ? icon.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + position;
+        result = 31 * result + status;
+        result = 31 * result + (payload != null ? payload.hashCode() : 0);
+        return result;
+    }
+
     @Override
     public String toString() {
         return "TaskDTO{" +
@@ -88,6 +128,7 @@ public class TaskDTO {
                 ", type='" + type + '\'' +
                 ", position=" + position +
                 ", status=" + status +
+                ", payload='" + payload + '\'' +
                 '}';
     }
 }

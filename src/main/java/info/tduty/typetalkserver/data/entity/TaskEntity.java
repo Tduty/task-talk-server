@@ -20,7 +20,7 @@ public class TaskEntity {
     @Column(name="avatar_url")
     private String avatar;
 
-    @Column(name="content")
+    @Column(name="content", columnDefinition = "LONGTEXT")
     private String content;
 
     @SerializedName("type")
