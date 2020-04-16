@@ -1,6 +1,7 @@
 package info.tduty.typetalkserver.domain.interactor;
 
 import info.tduty.typetalkserver.data.entity.*;
+import info.tduty.typetalkserver.domain.mapper.ContentTaskMockHelper;
 import info.tduty.typetalkserver.repository.wrapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -135,12 +136,12 @@ public class DefaultClassInteractor {
 
     private void generateTasks(LessonEntity lesson) {
         List<TaskEntity> tasks = new ArrayList<>();
-        tasks.add(generateTask("Flashcards", "", 0, "flashcards", lesson));
-        tasks.add(generateTask("Wordamess", "", 1, "wordamess", lesson));
-        tasks.add(generateTask("Hurry up", "", 2, "hurry_up", lesson));
-        tasks.add(generateTask("Phrase-Building", "", 3, "phrase_building", lesson));
-        tasks.add(generateTask("Translation", "", 4, "translation", lesson));
-        tasks.add(generateTask("Dictionary Pictionary", "", 5, "dictionary_pictionary", lesson));
+        tasks.add(generateTask("Flashcards", ContentTaskMockHelper.getFlashcardTaskContent(), 0, "flashcards", lesson));
+        tasks.add(generateTask("Wordamess?", ContentTaskMockHelper.getWordamessContent(), 1, "wordamess", lesson));
+        tasks.add(generateTask("Hurry up", ContentTaskMockHelper.getHurryUpTask(), 2, "hurry_up", lesson));
+        tasks.add(generateTask("Phrase-Building", ContentTaskMockHelper.getPhraseBuilderTaslContent(), 3, "phrase_building", lesson));
+        tasks.add(generateTask("Translation", ContentTaskMockHelper.getTranslationTaskContent(), 4, "translation", lesson));
+        tasks.add(generateTask("Dictionary Pictionary", ContentTaskMockHelper.getDictionaryPictionaryTaskContent(), 5, "dictionary_pictionary", lesson));
         lessonWrapper.saveTasks(tasks);
     }
 
