@@ -14,6 +14,9 @@ public class MessageNewPayload implements EventPayload {
     @SerializedName("sender_id")
     private String senderId;
 
+    @SerializedName("sender_name")
+    private String senderName;
+
     @SerializedName("sender_type")
     private String senderType;
 
@@ -33,6 +36,7 @@ public class MessageNewPayload implements EventPayload {
     public MessageNewPayload(String id,
                              String chatId,
                              String senderId,
+                             String senderName,
                              String senderType,
                              String body,
                              Long sendingTime,
@@ -40,6 +44,7 @@ public class MessageNewPayload implements EventPayload {
         this.id = id;
         this.chatId = chatId;
         this.senderId = senderId;
+        this.senderName = senderName;
         this.senderType = senderType;
         this.body = body;
         this.sendingTime = sendingTime;
@@ -68,6 +73,14 @@ public class MessageNewPayload implements EventPayload {
 
     public void setSenderId(String senderId) {
         this.senderId = senderId;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getSenderType() {
@@ -112,6 +125,7 @@ public class MessageNewPayload implements EventPayload {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (chatId != null ? !chatId.equals(that.chatId) : that.chatId != null) return false;
         if (senderId != null ? !senderId.equals(that.senderId) : that.senderId != null) return false;
+        if (senderName != null ? !senderName.equals(that.senderName) : that.senderName != null) return false;
         if (senderType != null ? !senderType.equals(that.senderType) : that.senderType != null) return false;
         if (body != null ? !body.equals(that.body) : that.body != null) return false;
         if (sendingTime != null ? !sendingTime.equals(that.sendingTime) : that.sendingTime != null) return false;
@@ -123,6 +137,7 @@ public class MessageNewPayload implements EventPayload {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (chatId != null ? chatId.hashCode() : 0);
         result = 31 * result + (senderId != null ? senderId.hashCode() : 0);
+        result = 31 * result + (senderName != null ? senderName.hashCode() : 0);
         result = 31 * result + (senderType != null ? senderType.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
         result = 31 * result + (sendingTime != null ? sendingTime.hashCode() : 0);
@@ -136,6 +151,7 @@ public class MessageNewPayload implements EventPayload {
                 "id='" + id + '\'' +
                 ", chatId='" + chatId + '\'' +
                 ", senderId='" + senderId + '\'' +
+                ", senderName='" + senderName + '\'' +
                 ", senderType='" + senderType + '\'' +
                 ", body='" + body + '\'' +
                 ", sendingTime=" + sendingTime +
