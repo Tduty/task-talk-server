@@ -137,9 +137,9 @@ public class DefaultClassInteractor {
         List<TaskEntity> tasks = new ArrayList<>();
 
         tasks.add(generateTask("Flashcards", ContentTaskMockHelper.Companion.getFlashcardTaskContent(), 0, "flashcards", lesson));
-        tasks.add(generateTask("Wordamess", "", 1, "wordamess", lesson));
+        tasks.add(generateTask("Wordamess", ContentTaskMockHelper.Companion.getWordamessContent(), 1, "wordamess", lesson));
         tasks.add(generateTask("Hurry up", "", 2, "hurry_up", lesson));
-        tasks.add(generateTask("Phrase-Building", "", 3, "phrase_building", lesson));
+        tasks.add(generateTask("Phrase-Building", ContentTaskMockHelper.Companion.getPhraseBuilderContent(), 3, "phrase_building", lesson));
         tasks.add(generateTask("Translation", ContentTaskMockHelper.Companion.getTranslationTaskContent(), 4, "translation", lesson));
         tasks.add(generateTask("Dictionary Pictionary", ContentTaskMockHelper.Companion.getDictionaryPictionaryContent(), 5, "dictionary_pictionary", lesson));
         lessonWrapper.saveTasks(tasks);

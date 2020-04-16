@@ -24,7 +24,7 @@ public class H2SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
-                .antMatchers("/h2-console/**")
+                .antMatchers("/h2-console/**", "/images/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

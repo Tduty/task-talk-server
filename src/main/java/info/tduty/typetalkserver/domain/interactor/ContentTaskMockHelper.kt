@@ -70,5 +70,62 @@ class ContentTaskMockHelper {
                 	]
             """.trimIndent()
         }
+
+        fun getPhraseBuilderContent() : String {
+            return """
+                    [
+                        {
+                            "phrases": ["Be", "more", "attentive, please"]
+                        },
+                        {
+                            "phrases": ["Be", "more", "attentive, please"]
+                        },
+                        {
+                            "phrases": ["Be", "more", "attentive, please"]
+                        }
+                    ]
+            """.trimIndent()
+        }
+
+        fun getWordamessContent() : String {
+            return """
+                    [
+                       {
+                            "mistake": true,
+                            "body": "test1",
+                            "correct_body": "test1" //nullable (if (mistake) text else null)
+                        },
+                        {
+                            "mistake": false,
+                            "body": "test1"
+                        },
+                        {
+                            "mistake": true,
+                            "body": "test1",
+                            "correct_body": "test1"
+                        },
+                        {
+                            "mistake": true,
+                            "body": "test1",
+                            "correct_body": "test1"
+                        },
+                        {
+                            "mistake": true,
+                            "body": "test1",
+                            "correct_body": "test1"
+                        },
+                        {
+                            "mistake": true,
+                            "body": "test1",
+                            "correct_body": "test1"
+                        },
+                        {
+                            "mistake": true,
+                            "body": "test1",
+                            "correct_body": "test1"
+                        }
+                    ]
+            """.trimIndent()
+        }
     }
 }
