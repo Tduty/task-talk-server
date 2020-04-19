@@ -53,7 +53,7 @@ public class LessonInteractor {
         generateLessonForAllUsers(lessonEntity, classEntity.getStudents());
     }
 
-    public void generateLessonForAllUsers(LessonEntity lesson, List<UserEntity> users) {
+    public void generateLessonForAllUsers(LessonEntity lesson, Set<UserEntity> users) {
         List<LessonProgressEntity> lessonsProgress = new ArrayList<>();
         for (UserEntity user : users) {
             LessonProgressEntity lessonProgress = new LessonProgressEntity();

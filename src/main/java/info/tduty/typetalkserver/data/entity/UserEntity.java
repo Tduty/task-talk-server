@@ -29,6 +29,9 @@ public class UserEntity {
     @Column(name="teacher")
     private Boolean teacher;
 
+    @Column(name="is_connected")
+    private Boolean isConnected;
+
     @OneToMany(mappedBy = "sender", fetch = FetchType.EAGER)
     private Set<MessageEntity> messages;
 
@@ -37,6 +40,9 @@ public class UserEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ClassEntity classEntity;
+
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    private Set<ClassEntity> classes;
 
     @OneToMany(mappedBy = "executor", fetch = FetchType.EAGER)
     private Set<LessonProgressEntity> lessons;
@@ -92,6 +98,14 @@ public class UserEntity {
         this.teacher = teacher;
     }
 
+    public Boolean getConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(Boolean connected) {
+        isConnected = connected;
+    }
+
     public Set<MessageEntity> getMessages() {
         return messages;
     }
@@ -114,6 +128,14 @@ public class UserEntity {
 
     public void setClassEntity(ClassEntity classEntity) {
         this.classEntity = classEntity;
+    }
+
+    public Set<ClassEntity> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Set<ClassEntity> classes) {
+        this.classes = classes;
     }
 
     public Set<LessonProgressEntity> getLessons() {
@@ -144,6 +166,7 @@ public class UserEntity {
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (enabled != null ? !enabled.equals(that.enabled) : that.enabled != null) return false;
         if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
+        if (isConnected != null ? !isConnected.equals(that.isConnected) : that.isConnected != null) return false;
         return teacher != null ? !teacher.equals(that.teacher) : that.teacher != null;
     }
 
@@ -155,6 +178,7 @@ public class UserEntity {
         result = 31 * result + (enabled != null ? enabled.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
+        result = 31 * result + (isConnected != null ? isConnected.hashCode() : 0);
         return result;
     }
 
@@ -167,6 +191,7 @@ public class UserEntity {
                 ", enabled=" + enabled +
                 ", sex='" + sex + '\'' +
                 ", teacher=" + teacher +
+                ", isConnected=" + isConnected +
                 '}';
     }
 }

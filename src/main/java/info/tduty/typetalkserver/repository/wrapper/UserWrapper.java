@@ -36,7 +36,9 @@ public class UserWrapper {
     }
 
     public UserEntity add(UserEntity user) {
-        return userJpaRepository.save(user);
+        UserEntity userEntity = userJpaRepository.save(user);
+        saveRuleUser(userEntity);
+        return userEntity;
     }
 
     public Iterable<UserEntity> addList(List<UserEntity> users) {
@@ -53,12 +55,18 @@ public class UserWrapper {
         return userJpaRepository.save(user);
     }
 
+    private void saveRuleUser(UserEntity user) {
+        AuthorityEntity auth = authorityJpaRepository.findByUsername(user.getName());
+        if (auth != null) return;
+        AuthorityEntity authority = new AuthorityEntity();
+        authority.setName(user.getName());
+        authority.setAuthority("ROLE_USER");
+        authorityJpaRepository.save(authority);
+    }
+
     private void saveRuleUser(Iterable<UserEntity> users) {
         for (UserEntity user : users) {
-            AuthorityEntity authority = new AuthorityEntity();
-            authority.setName(user.getName());
-            authority.setAuthority("ROLE_USER");
-            authorityJpaRepository.save(authority);
+            saveRuleUser(user);
         }
     }
 }
