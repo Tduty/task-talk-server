@@ -1,5 +1,6 @@
 package info.tduty.typetalkserver.domain.interactor;
 
+import info.tduty.typetalkserver.data.User;
 import info.tduty.typetalkserver.data.entity.*;
 import info.tduty.typetalkserver.domain.mapper.ContentTaskMockHelper;
 import info.tduty.typetalkserver.repository.wrapper.*;
@@ -42,28 +43,36 @@ public class DefaultClassInteractor {
     }
 
     private void init() {
-        ClassEntity classEntity = classWrapper.add(createClass());
+        UserEntity teacher = userWrapper.add(createTeacher());
+        ClassEntity classEntity = classWrapper.add(createClass(teacher));
         Iterable<UserEntity> users = userWrapper.addList(createUsers(classEntity));
+        List<UserEntity> allUsers = new ArrayList<>();
+        allUsers.add(teacher);
+        users.forEach(allUsers::add);
 
-        generateClassChat(classEntity, users);
-        generateTeacherChats(classEntity, users);
+        generateClassChat(classEntity, allUsers);
+        generateTeacherChats(classEntity, allUsers);
         generateLesson(classEntity);
     }
 
-    private ClassEntity createClass() {
+    private ClassEntity createClass(UserEntity teacher) {
         ClassEntity classEntity = new ClassEntity();
         classEntity.setTitle("Test class");
         classEntity.setAvatar("test");
+        classEntity.setTeacher(teacher);
         return classEntity;
+    }
+
+    private UserEntity createTeacher() {
+        return createUser(null, "Teacher", "12345", "female", true);
     }
 
     private List<UserEntity> createUsers(ClassEntity classEntity) {
         ArrayList<UserEntity> list = new ArrayList<>();
-        list.add(createUser(classEntity, "Teacher", "12345", "female", true));
         list.add(createUser(classEntity, "Test1", "12345", "male"));
-        list.add(createUser(classEntity, "Test2", "12345", "male"));
-        list.add(createUser(classEntity, "Test3", "12345", "male"));
-        list.add(createUser(classEntity, "Test4", "12345", "male"));
+        list.add(createUser(classEntity, "Test2", "12345", "female"));
+        list.add(createUser(classEntity, "Test3", "12345", "female"));
+        list.add(createUser(classEntity, "Test4", "12345", "female"));
         list.add(createUser(classEntity, "Test5", "12345", "male"));
         list.add(createUser(classEntity, "Test6", "12345", "male"));
         list.add(createUser(classEntity, "Test7", "12345", "male"));
@@ -80,6 +89,7 @@ public class DefaultClassInteractor {
         entity.setTeacher(isTeacher);
         entity.setClassEntity(classEntity);
         entity.setEnabled(true);
+        entity.setConnected(false);
         return entity;
     }
 

@@ -56,7 +56,7 @@ public class ChatInteractor {
         for (ChatEntity chatEntity : user.getChats()) {
             if (chatEntity.getChatMembers().size() > 2) continue;
             for (UserEntity userEntity : chatEntity.getChatMembers()) {
-                if (userEntity.getTeacher())return mapToDTO(chatEntity);
+                if (userEntity.getTeacher()) return mapToDTO(chatEntity);
             }
         }
         throw new IllegalArgumentException("chat not search");

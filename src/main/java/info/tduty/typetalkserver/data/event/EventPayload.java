@@ -4,6 +4,7 @@ public interface EventPayload {
 
     enum Type {
 
+        USER_STATUS,
         MESSAGE_NEW,
         LESSON,
         TYPING;

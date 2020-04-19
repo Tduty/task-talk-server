@@ -21,8 +21,11 @@ public class ClassEntity {
     @Column(name="avatar")
     private String avatar;
 
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private UserEntity teacher;
+
     @OneToMany(mappedBy="classEntity", fetch = FetchType.EAGER)
-    private List<UserEntity> students;
+    private Set<UserEntity> students;
 
     @OneToMany(mappedBy="classEntity", fetch = FetchType.EAGER)
     private List<ChatEntity> chats;
@@ -59,12 +62,20 @@ public class ClassEntity {
         this.avatar = avatar;
     }
 
-    public List<UserEntity> getStudents() {
+    public Set<UserEntity> getStudents() {
         return students;
     }
 
-    public void setStudents(List<UserEntity> students) {
+    public void setStudents(Set<UserEntity> students) {
         this.students = students;
+    }
+
+    public UserEntity getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(UserEntity teacher) {
+        this.teacher = teacher;
     }
 
     public List<ChatEntity> getChats() {

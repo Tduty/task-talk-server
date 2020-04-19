@@ -1,6 +1,5 @@
 package info.tduty.typetalkserver.service.ws;
 
-import info.tduty.typetalkserver.data.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -9,6 +8,9 @@ import java.util.Map;
 
 @Component
 public class SessionRegistry {
+
+    public final static String DISCONNECTED_STATUS = "disconnected";
+    public final static String CONNECTED_STATUS = "connected";
 
     private Map<String, WebSocketSession> sessionMap;
 
@@ -26,5 +28,17 @@ public class SessionRegistry {
 
     public WebSocketSession get(String userId) {
         return sessionMap.get(userId);
+    }
+
+    public boolean contains(String userId) {
+        return sessionMap.containsKey(userId);
+    }
+
+    public String getStatusForUser(String userId) {
+        if (contains(userId)) {
+            return CONNECTED_STATUS;
+        } else {
+            return DISCONNECTED_STATUS;
+        }
     }
 }

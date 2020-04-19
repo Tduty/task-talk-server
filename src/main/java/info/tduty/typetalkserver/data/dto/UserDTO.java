@@ -13,10 +13,14 @@ public class UserDTO {
     @SerializedName("class_name")
     private String className;
 
-    public UserDTO(String id, String name, String className) {
+    @SerializedName("teacher")
+    private boolean isTeacher;
+
+    public UserDTO(String id, String name, String className, boolean isTeacher) {
         this.id = id;
         this.name = name;
         this.className = className;
+        this.isTeacher = isTeacher;
     }
 
     public String getId() {
@@ -43,6 +47,14 @@ public class UserDTO {
         this.className = className;
     }
 
+    public boolean isTeacher() {
+        return isTeacher;
+    }
+
+    public void setTeacher(boolean teacher) {
+        isTeacher = teacher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,6 +62,7 @@ public class UserDTO {
 
         UserDTO userDTO = (UserDTO) o;
 
+        if (isTeacher != userDTO.isTeacher) return false;
         if (id != null ? !id.equals(userDTO.id) : userDTO.id != null) return false;
         if (name != null ? !name.equals(userDTO.name) : userDTO.name != null) return false;
         return className != null ? className.equals(userDTO.className) : userDTO.className == null;
@@ -60,6 +73,7 @@ public class UserDTO {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (className != null ? className.hashCode() : 0);
+        result = 31 * result + (isTeacher ? 1 : 0);
         return result;
     }
 
@@ -69,6 +83,7 @@ public class UserDTO {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", className='" + className + '\'' +
+                ", isTeacher=" + isTeacher +
                 '}';
     }
 }
