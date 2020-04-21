@@ -3,6 +3,7 @@ package info.tduty.typetalkserver.data.serializer;
 import com.google.gson.*;
 import info.tduty.typetalkserver.data.event.Event;
 import info.tduty.typetalkserver.data.event.EventPayload;
+import info.tduty.typetalkserver.data.event.payload.CorrectionPayload;
 import info.tduty.typetalkserver.data.event.payload.LessonPayload;
 import info.tduty.typetalkserver.data.event.payload.MessageNewPayload;
 import info.tduty.typetalkserver.data.event.payload.TypingPayload;
@@ -33,6 +34,9 @@ public class EventDeserializer implements JsonDeserializer<Event> {
                 break;
             case TYPING:
                 payload = gson.fromJson(jsonElement, TypingPayload.class);
+                break;
+            case CORRECTION:
+                payload = gson.fromJson(jsonElement, CorrectionPayload.class);
                 break;
             default:
                 payload = null;
