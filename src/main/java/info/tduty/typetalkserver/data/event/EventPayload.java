@@ -7,7 +7,8 @@ public interface EventPayload {
         USER_STATUS,
         MESSAGE_NEW,
         LESSON,
-        TYPING;
+        TYPING,
+        CORRECTION;
 
         public String getString() {
             return name().toLowerCase();

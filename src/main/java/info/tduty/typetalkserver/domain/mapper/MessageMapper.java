@@ -43,8 +43,9 @@ public class MessageMapper {
                 message.getSender().getName(),
                 getSenderType(message.getSender()),
                 message.getContent(),
-                message.getTime(),
-                false
+                message.getAdditionalType(),
+                message.getAdditional(),
+                message.getTime()
         );
         return new Event(EventPayload.Type.MESSAGE_NEW.getString(), payload);
     }
@@ -57,8 +58,9 @@ public class MessageMapper {
                 message.getSender().getName(),
                 getSenderType(message.getSender()),
                 message.getContent(),
-                message.getTime(),
-                false
+                message.getAdditionalType(),
+                message.getAdditional(),
+                message.getTime()
         );
         return dto;
     }

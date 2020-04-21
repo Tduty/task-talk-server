@@ -40,9 +40,9 @@ public class EventSender {
             if (session != null) {
                 synchronized(session) {
                     session.sendMessage(new TextMessage(jsonStr));
+                    logger.debug("message sent to id: {}, type: {}, event: {}", userId, event.getType(), event);
                 }
             }
-            logger.debug("message sent to id: {}, type: {}, event: {}", userId, event.getType(), event);
         } catch (IOException e) {
             logger.error("message not sent to id: {}, event: {}", userId, event);
         }

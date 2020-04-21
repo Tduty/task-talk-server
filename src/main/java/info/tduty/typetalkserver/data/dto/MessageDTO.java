@@ -22,11 +22,14 @@ public class MessageDTO {
     @SerializedName("body")
     private String body;
 
+    @SerializedName("additional_type")
+    private Integer additionalType;
+
+    @SerializedName("additional")
+    private String additional;
+
     @SerializedName("sending_time")
     private Long sendingTime; //TODO: перейти к timestamp
-
-    @SerializedName("exist_mistake")
-    private Boolean existMistake;
 
     public MessageDTO(String id,
                       String chatId,
@@ -34,16 +37,18 @@ public class MessageDTO {
                       String senderName,
                       String senderType,
                       String body,
-                      Long sendingTime,
-                      Boolean existMistake) {
+                      Integer additionalType,
+                      String additional,
+                      Long sendingTime) {
         this.id = id;
         this.chatId = chatId;
         this.senderId = senderId;
         this.senderName = senderName;
         this.senderType = senderType;
         this.body = body;
+        this.additionalType = additionalType;
+        this.additional = additional;
         this.sendingTime = sendingTime;
-        this.existMistake = existMistake;
     }
 
     public String getId() {
@@ -94,20 +99,28 @@ public class MessageDTO {
         this.body = body;
     }
 
+    public Integer getAdditionalType() {
+        return additionalType;
+    }
+
+    public void setAdditionalType(Integer additionalType) {
+        this.additionalType = additionalType;
+    }
+
+    public String getAdditional() {
+        return additional;
+    }
+
+    public void setAdditional(String additional) {
+        this.additional = additional;
+    }
+
     public Long getSendingTime() {
         return sendingTime;
     }
 
     public void setSendingTime(Long sendingTime) {
         this.sendingTime = sendingTime;
-    }
-
-    public Boolean getExistMistake() {
-        return existMistake;
-    }
-
-    public void setExistMistake(Boolean existMistake) {
-        this.existMistake = existMistake;
     }
 
     @Override
@@ -123,8 +136,10 @@ public class MessageDTO {
         if (senderName != null ? !senderName.equals(that.senderName) : that.senderName != null) return false;
         if (senderType != null ? !senderType.equals(that.senderType) : that.senderType != null) return false;
         if (body != null ? !body.equals(that.body) : that.body != null) return false;
-        if (sendingTime != null ? !sendingTime.equals(that.sendingTime) : that.sendingTime != null) return false;
-        return existMistake != null ? existMistake.equals(that.existMistake) : that.existMistake == null;
+        if (additionalType != null ? !additionalType.equals(that.additionalType) : that.additionalType != null)
+            return false;
+        if (additional != null ? !additional.equals(that.additional) : that.additional != null) return false;
+        return sendingTime != null ? sendingTime.equals(that.sendingTime) : that.sendingTime == null;
     }
 
     @Override
@@ -135,8 +150,9 @@ public class MessageDTO {
         result = 31 * result + (senderName != null ? senderName.hashCode() : 0);
         result = 31 * result + (senderType != null ? senderType.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
+        result = 31 * result + (additionalType != null ? additionalType.hashCode() : 0);
+        result = 31 * result + (additional != null ? additional.hashCode() : 0);
         result = 31 * result + (sendingTime != null ? sendingTime.hashCode() : 0);
-        result = 31 * result + (existMistake != null ? existMistake.hashCode() : 0);
         return result;
     }
 
@@ -149,8 +165,9 @@ public class MessageDTO {
                 ", senderName='" + senderName + '\'' +
                 ", senderType='" + senderType + '\'' +
                 ", body='" + body + '\'' +
+                ", additionalType=" + additionalType +
+                ", additional='" + additional + '\'' +
                 ", sendingTime=" + sendingTime +
-                ", existMistake=" + existMistake +
                 '}';
     }
 }

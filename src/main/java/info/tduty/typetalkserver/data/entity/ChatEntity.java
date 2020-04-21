@@ -27,10 +27,10 @@ public class ChatEntity {
     @Column(name="avatar_url")
     private String avatar;
 
-    @OneToMany(mappedBy="chat", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="chat", fetch = FetchType.LAZY)
     private Set<MessageEntity> messages;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "User_to_Chat",
             joinColumns = { @JoinColumn(name = "ID_CHAT") },
@@ -38,7 +38,7 @@ public class ChatEntity {
     )
     private Set<UserEntity> chatMembers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ClassEntity classEntity;
 
     public String getId() {

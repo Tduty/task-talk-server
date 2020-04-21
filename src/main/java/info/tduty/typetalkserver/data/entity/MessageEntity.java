@@ -22,6 +22,12 @@ public class MessageEntity {
     @Column(name="avatar_url")
     private String avatar;
 
+    @Column(name="additional_type")
+    private Integer additionalType;
+
+    @Column(name="additional")
+    private String additional;
+
     @Column(name="time")
     private long time;
 
@@ -87,6 +93,22 @@ public class MessageEntity {
         this.sender = sender;
     }
 
+    public Integer getAdditionalType() {
+        return additionalType;
+    }
+
+    public void setAdditionalType(Integer additionalType) {
+        this.additionalType = additionalType;
+    }
+
+    public String getAdditional() {
+        return additional;
+    }
+
+    public void setAdditional(String additional) {
+        this.additional = additional;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,7 +120,12 @@ public class MessageEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (syncId != null ? !syncId.equals(that.syncId) : that.syncId != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        return avatar != null ? !avatar.equals(that.avatar) : that.avatar != null;
+        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
+        if (additionalType != null ? !additionalType.equals(that.additionalType) : that.additionalType != null)
+            return false;
+        if (additional != null ? !additional.equals(that.additional) : that.additional != null) return false;
+        if (chat != null ? !chat.equals(that.chat) : that.chat != null) return false;
+        return sender != null ? sender.equals(that.sender) : that.sender == null;
     }
 
     @Override
@@ -107,7 +134,11 @@ public class MessageEntity {
         result = 31 * result + (syncId != null ? syncId.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + (additionalType != null ? additionalType.hashCode() : 0);
+        result = 31 * result + (additional != null ? additional.hashCode() : 0);
         result = 31 * result + (int) (time ^ (time >>> 32));
+        result = 31 * result + (chat != null ? chat.hashCode() : 0);
+        result = 31 * result + (sender != null ? sender.hashCode() : 0);
         return result;
     }
 
@@ -118,7 +149,11 @@ public class MessageEntity {
                 ", syncId='" + syncId + '\'' +
                 ", content='" + content + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", additionalType=" + additionalType +
+                ", additional='" + additional + '\'' +
                 ", time=" + time +
+                ", chat=" + chat +
+                ", sender=" + sender +
                 '}';
     }
 }

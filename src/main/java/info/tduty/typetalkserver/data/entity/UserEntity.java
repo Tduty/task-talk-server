@@ -32,22 +32,22 @@ public class UserEntity {
     @Column(name="is_connected")
     private Boolean isConnected;
 
-    @OneToMany(mappedBy = "sender", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private Set<MessageEntity> messages;
 
-    @ManyToMany(mappedBy="chatMembers", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy="chatMembers", fetch = FetchType.LAZY)
     private Set<ChatEntity> chats;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ClassEntity classEntity;
 
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private Set<ClassEntity> classes;
 
-    @OneToMany(mappedBy = "executor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY)
     private Set<LessonProgressEntity> lessons;
 
-    @OneToMany(mappedBy = "executor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY)
     private Set<TaskProgressEntity> tasks;
 
     public String getId() {
