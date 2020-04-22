@@ -56,6 +56,10 @@ public class LessonWrapper {
         taskProgressJpaRepository.saveAll(tasks);
     }
 
+    public Iterable<LessonEntity> getAll() {
+        return lessonJpaRepository.findAll();
+    }
+
     public List<LessonEntity> getByClassId(String classId) {
         ClassEntity classEntity = classJpaRepository.findById(classId).orElse(null);
         if (classEntity == null) return Collections.emptyList();

@@ -1,6 +1,7 @@
 package info.tduty.typetalkserver.domain.mapper;
 
 import info.tduty.typetalkserver.data.dto.LessonDTO;
+import info.tduty.typetalkserver.data.dto.TeacherLessonDTO;
 import info.tduty.typetalkserver.data.entity.LessonEntity;
 import info.tduty.typetalkserver.data.entity.LessonProgressEntity;
 import info.tduty.typetalkserver.data.entity.UserEntity;
@@ -33,6 +34,18 @@ public class LessonMapper {
                         .stream()
                         .map(task -> taskMapper.dbToDto(task))
                         .collect(Collectors.toList())
+        );
+    }
+
+    public TeacherLessonDTO dbToTeacherDto(LessonEntity lesson, int studentCount, Integer completedCount) {
+        return new TeacherLessonDTO(
+                lesson.getId(),
+                lesson.getTitle(),
+                lesson.getAvatar(),
+                completedCount != null ? completedCount : 0,
+                studentCount,
+                lesson.getDescription(),
+                completedCount == null
         );
     }
 }

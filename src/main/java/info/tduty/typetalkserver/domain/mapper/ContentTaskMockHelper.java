@@ -69,6 +69,10 @@ public class ContentTaskMockHelper {
         return gson.toJson(list);
     }
 
+    public static String getDialogWithUnknownContent() {
+        return gson.toJson(new DialogWihtUnknown("Dialog", 5));
+    }
+
     private static class FlashcardTask {
         String type;
         String front;
@@ -142,6 +146,17 @@ public class ContentTaskMockHelper {
             this.type = type;
             this.translate = translate;
             this.any_translates = any_translates;
+        }
+    }
+
+    private static class DialogWihtUnknown {
+
+        String description;
+        int count_message;
+
+        public DialogWihtUnknown(String description, int count_message) {
+            this.description = description;
+            this.count_message = count_message;
         }
     }
 }

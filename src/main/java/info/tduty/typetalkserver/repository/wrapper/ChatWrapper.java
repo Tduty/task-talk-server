@@ -6,6 +6,7 @@ import info.tduty.typetalkserver.repository.jpa.ChatJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -24,5 +25,9 @@ public class ChatWrapper {
 
     public ChatEntity add(ChatEntity chatEntity) {
         return chatJpaRepository.save(chatEntity);
+    }
+
+    public List<ChatEntity> getByTaskId(String lessonId, String taskId) {
+        return chatJpaRepository.findByTaskId(lessonId, taskId);
     }
 }

@@ -152,6 +152,7 @@ public class DefaultClassInteractor {
         tasks.add(generateTask("Phrase-Building", ContentTaskMockHelper.getPhraseBuilderTaslContent(), 3, "phrase_building", lesson));
         tasks.add(generateTask("Translation", ContentTaskMockHelper.getTranslationTaskContent(), 4, "translation", lesson));
         tasks.add(generateTask("Dictionary Pictionary", ContentTaskMockHelper.getDictionaryPictionaryTaskContent(), 5, "dictionary_pictionary", lesson));
+        tasks.add(generateTask("Dialog", ContentTaskMockHelper.getDialogWithUnknownContent(), 6, "dialog_with_unknown", lesson));
         lessonWrapper.saveTasks(tasks);
     }
 
