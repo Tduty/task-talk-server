@@ -2,6 +2,8 @@ package info.tduty.typetalkserver.data.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class TaskDTO {
 
     @SerializedName("id")
@@ -22,16 +24,20 @@ public class TaskDTO {
     @SerializedName("status")
     private int status;
 
+    @SerializedName("optional")
+    private boolean optional;
+
     @SerializedName("payload")
     private String payload;
 
-    public TaskDTO(String id, String icon, String title, String type, int position, int status, String payload) {
+    public TaskDTO(String id, String icon, String title, String type, int position, int status, boolean optional, String payload) {
         this.id = id;
         this.icon = icon;
         this.title = title;
         this.type = type;
         this.position = position;
         this.status = status;
+        this.optional = optional;
         this.payload = payload;
     }
 
@@ -91,32 +97,32 @@ public class TaskDTO {
         this.payload = payload;
     }
 
+    public boolean isOptional() {
+        return optional;
+    }
+
+    public void setOptional(boolean optional) {
+        this.optional = optional;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TaskDTO taskDTO = (TaskDTO) o;
-
-        if (position != taskDTO.position) return false;
-        if (status != taskDTO.status) return false;
-        if (id != null ? !id.equals(taskDTO.id) : taskDTO.id != null) return false;
-        if (icon != null ? !icon.equals(taskDTO.icon) : taskDTO.icon != null) return false;
-        if (title != null ? !title.equals(taskDTO.title) : taskDTO.title != null) return false;
-        if (type != null ? !type.equals(taskDTO.type) : taskDTO.type != null) return false;
-        return payload != null ? payload.equals(taskDTO.payload) : taskDTO.payload == null;
+        return position == taskDTO.position &&
+                status == taskDTO.status &&
+                optional == taskDTO.optional &&
+                Objects.equals(id, taskDTO.id) &&
+                Objects.equals(icon, taskDTO.icon) &&
+                Objects.equals(title, taskDTO.title) &&
+                Objects.equals(type, taskDTO.type) &&
+                Objects.equals(payload, taskDTO.payload);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (icon != null ? icon.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + position;
-        result = 31 * result + status;
-        result = 31 * result + (payload != null ? payload.hashCode() : 0);
-        return result;
+        return Objects.hash(id, icon, title, type, position, status, optional, payload);
     }
 
     @Override
@@ -128,6 +134,7 @@ public class TaskDTO {
                 ", type='" + type + '\'' +
                 ", position=" + position +
                 ", status=" + status +
+                ", optional=" + optional +
                 ", payload='" + payload + '\'' +
                 '}';
     }

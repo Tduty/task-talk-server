@@ -8,6 +8,8 @@ public interface EventPayload {
         MESSAGE_NEW,
         LESSON,
         TYPING,
+        TASK,
+        LESSON_PROGRESS,
         CORRECTION;
 
         public String getString() {

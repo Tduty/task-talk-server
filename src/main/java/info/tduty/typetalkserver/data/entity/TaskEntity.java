@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Task")
@@ -28,6 +29,9 @@ public class TaskEntity {
 
     @SerializedName("position")
     private int position;
+
+    @SerializedName("optional")
+    private boolean isOptional;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private LessonEntity lesson;
@@ -88,30 +92,32 @@ public class TaskEntity {
         this.lesson = lesson;
     }
 
+    public boolean isOptional() {
+        return isOptional;
+    }
+
+    public void setOptional(boolean optional) {
+        isOptional = optional;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TaskEntity that = (TaskEntity) o;
-
-        if (position != that.position) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        return type != null ? !type.equals(that.type) : that.type != null;
+        return position == that.position &&
+                isOptional == that.isOptional &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(avatar, that.avatar) &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(lesson, that.lesson);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + position;
-        return result;
+        return Objects.hash(id, title, avatar, content, type, position, isOptional, lesson);
     }
 
     @Override
@@ -123,6 +129,8 @@ public class TaskEntity {
                 ", content='" + content + '\'' +
                 ", type='" + type + '\'' +
                 ", position=" + position +
+                ", isOptional=" + isOptional +
+                ", lesson=" + lesson +
                 '}';
     }
 }

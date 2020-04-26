@@ -17,12 +17,14 @@ public class EventHandlerPull {
     public EventHandlerPull(MessageNewHandler messageNewHandler,
                             LessonHandler lessonHandler,
                             TypingHandler typingHandler,
-                            CorrectionHandler correctionHandler) {
+                            CorrectionHandler correctionHandler,
+                            TaskHandler taskHandler) {
         map = new HashMap<>();
         map.put(EventPayload.Type.MESSAGE_NEW, messageNewHandler);
         map.put(EventPayload.Type.LESSON, lessonHandler);
         map.put(EventPayload.Type.TYPING, typingHandler);
         map.put(EventPayload.Type.CORRECTION, correctionHandler);
+        map.put(EventPayload.Type.TASK, taskHandler);
     }
 
     public EventHandler getHandler(String type) {

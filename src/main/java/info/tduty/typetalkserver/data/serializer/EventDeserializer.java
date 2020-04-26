@@ -3,10 +3,7 @@ package info.tduty.typetalkserver.data.serializer;
 import com.google.gson.*;
 import info.tduty.typetalkserver.data.event.Event;
 import info.tduty.typetalkserver.data.event.EventPayload;
-import info.tduty.typetalkserver.data.event.payload.CorrectionPayload;
-import info.tduty.typetalkserver.data.event.payload.LessonPayload;
-import info.tduty.typetalkserver.data.event.payload.MessageNewPayload;
-import info.tduty.typetalkserver.data.event.payload.TypingPayload;
+import info.tduty.typetalkserver.data.event.payload.*;
 
 import java.lang.reflect.Type;
 
@@ -37,6 +34,12 @@ public class EventDeserializer implements JsonDeserializer<Event> {
                 break;
             case CORRECTION:
                 payload = gson.fromJson(jsonElement, CorrectionPayload.class);
+                break;
+            case TASK:
+                payload = gson.fromJson(jsonElement, TaskPayload.class);
+                break;
+            case LESSON_PROGRESS:
+                payload = gson.fromJson(jsonElement, LessonProgressPayload.class);
                 break;
             default:
                 payload = null;
