@@ -17,6 +17,7 @@ public class TaskMapper {
                 taskProgress.getTask().getType(),
                 taskProgress.getTask().getPosition(),
                 taskProgress.getStatus(),
+                taskProgress.getTask().isOptional(),
                 taskProgress.getTask().getContent()
         );
     }

@@ -4,7 +4,10 @@ import info.tduty.typetalkserver.data.entity.*;
 import info.tduty.typetalkserver.repository.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.*;
 
 @Repository
@@ -34,6 +37,10 @@ public class LessonWrapper {
 
     public LessonEntity save(LessonEntity lesson) {
         return lessonJpaRepository.save(lesson);
+    }
+
+    public LessonProgressEntity save(LessonProgressEntity lesson) {
+        return lessonProgressJpaRepository.save(lesson);
     }
 
     public Iterable<TaskEntity> saveTasks(List<TaskEntity> tasks) {
@@ -71,6 +78,7 @@ public class LessonWrapper {
         else return Collections.emptySet();
     }
 
+    @Transactional
     public Optional<LessonProgressEntity> getByLessonId(String username, String lessonId) {
         UserEntity userEntity = userJpaRepository.findByUsername(username);
         if (userEntity == null) return Optional.empty();

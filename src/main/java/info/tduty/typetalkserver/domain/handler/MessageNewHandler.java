@@ -10,12 +10,10 @@ import info.tduty.typetalkserver.repository.wrapper.ChatWrapper;
 import info.tduty.typetalkserver.repository.wrapper.MessageWrapper;
 import info.tduty.typetalkserver.service.ws.EventSender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
