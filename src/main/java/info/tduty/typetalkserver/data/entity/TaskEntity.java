@@ -111,13 +111,12 @@ public class TaskEntity {
                 Objects.equals(title, that.title) &&
                 Objects.equals(avatar, that.avatar) &&
                 Objects.equals(content, that.content) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(lesson, that.lesson);
+                Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, avatar, content, type, position, isOptional, lesson);
+        return Objects.hash(id, title, avatar, content, type, position, isOptional);
     }
 
     @Override
