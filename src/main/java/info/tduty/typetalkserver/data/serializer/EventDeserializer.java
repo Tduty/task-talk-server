@@ -4,7 +4,6 @@ import com.google.gson.*;
 import info.tduty.typetalkserver.data.event.Event;
 import info.tduty.typetalkserver.data.event.EventPayload;
 import info.tduty.typetalkserver.data.event.payload.*;
-import info.tduty.typetalkserver.domain.handler.LessonProgressHandler;
 
 import java.lang.reflect.Type;
 
