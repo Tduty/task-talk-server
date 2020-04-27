@@ -27,6 +27,12 @@ public class ChatEntity {
     @Column(name="avatar_url")
     private String avatar;
 
+    @Column(name="lesson_id")
+    private String lessonId;
+
+    @Column(name="task_id")
+    private String taskId;
+
     @OneToMany(mappedBy="chat", fetch = FetchType.LAZY)
     private Set<MessageEntity> messages;
 
@@ -105,6 +111,22 @@ public class ChatEntity {
         this.classEntity = classEntity;
     }
 
+    public String getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(String lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,7 +138,9 @@ public class ChatEntity {
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        return avatar != null ? !avatar.equals(that.avatar) : that.avatar != null;
+        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
+        if (lessonId != null ? !lessonId.equals(that.lessonId) : that.lessonId != null) return false;
+        return taskId != null ? taskId.equals(that.taskId) : that.taskId == null;
     }
 
     @Override
@@ -126,6 +150,8 @@ public class ChatEntity {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + (lessonId != null ? lessonId.hashCode() : 0);
+        result = 31 * result + (taskId != null ? taskId.hashCode() : 0);
         return result;
     }
 
@@ -137,6 +163,8 @@ public class ChatEntity {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", lessonId='" + lessonId + '\'' +
+                ", taskId='" + taskId + '\'' +
                 '}';
     }
 }

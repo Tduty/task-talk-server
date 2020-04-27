@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class ChatInteractor {
@@ -81,6 +82,19 @@ public class ChatInteractor {
             chats.add(mapToDTO(chatEntity));
         }
         return chats;
+    }
+
+    public List<ChatDTO> getChatsByTaskId(String username, String lessonId, String taskId) {
+        UserEntity user = userWrapper.getByUsername(username).orElseThrow(IllegalArgumentException::new);
+        List<ChatEntity> chatEntities = chatWrapper.getByTaskId(lessonId, taskId);
+        if (user.getTeacher()) return chatEntities.stream().map(this::mapToDTO).collect(Collectors.toList());
+        List<ChatEntity> chatsForTask = new ArrayList<>();
+        for (ChatEntity chat : chatEntities) {
+            if (chat.getChatMembers().contains(user)) {
+                chatsForTask.add(chat);
+            }
+        }
+        return chatsForTask.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
 

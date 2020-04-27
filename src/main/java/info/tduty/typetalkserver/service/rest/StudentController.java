@@ -21,7 +21,7 @@ public class StudentController {
     }
 
     @GetMapping("/student/{uuid}")
-    public List<StudentDTO> getByLessonId(@PathVariable String uuid, Principal principal) {
+    public List<StudentDTO> getByClassId(@PathVariable String uuid, Principal principal) {
         return classInteractor.get(principal.getName(), uuid);
     }
 }
