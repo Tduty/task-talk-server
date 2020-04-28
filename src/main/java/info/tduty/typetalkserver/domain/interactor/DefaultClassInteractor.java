@@ -12,7 +12,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -224,12 +227,12 @@ public class DefaultClassInteractor {
     }
 
     public static String getJsonString(String path) {
-        StringBuilder json = new StringBuilder();
-        try (Stream<String> stream = Files.lines(new ClassPathResource(path).getFile().toPath())) {
-            stream.forEach(s -> json.append(s).append("\n"));
+        try (InputStream stream = new ClassPathResource(path).getInputStream()) {
+            return new BufferedReader(new InputStreamReader(stream)).lines()
+                    .parallel().collect(Collectors.joining("\n"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return json.toString();
+        return "";
     }
 }
