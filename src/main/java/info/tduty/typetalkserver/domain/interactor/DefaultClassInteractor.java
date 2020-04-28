@@ -12,7 +12,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -67,26 +70,26 @@ public class DefaultClassInteractor {
 
     private ClassEntity createClass(UserEntity teacher) {
         ClassEntity classEntity = new ClassEntity();
-        classEntity.setTitle("Test class");
+        classEntity.setTitle("9A class");
         classEntity.setAvatar("test");
         classEntity.setTeacher(teacher);
         return classEntity;
     }
 
     private UserEntity createTeacher() {
-        return createUser(null, "Teacher", "12345", "female", true);
+        return createUser(null, "Skotnicova Julia", "12345", "female", true);
     }
 
     private List<UserEntity> createUsers(ClassEntity classEntity) {
         ArrayList<UserEntity> list = new ArrayList<>();
-        list.add(createUser(classEntity, "Test1", "12345", "male"));
-        list.add(createUser(classEntity, "Test2", "12345", "female"));
-        list.add(createUser(classEntity, "Test3", "12345", "female"));
-        list.add(createUser(classEntity, "Test4", "12345", "female"));
-        list.add(createUser(classEntity, "Test5", "12345", "male"));
-        list.add(createUser(classEntity, "Test6", "12345", "male"));
-        list.add(createUser(classEntity, "Test7", "12345", "male"));
-        list.add(createUser(classEntity, "Test8", "12345", "male"));
+        list.add(createUser(classEntity, "Ivan", "12345", "male"));
+        list.add(createUser(classEntity, "Rita", "12345", "female"));
+        list.add(createUser(classEntity, "Sonya", "12345", "female"));
+        list.add(createUser(classEntity, "Katya", "12345", "female"));
+        list.add(createUser(classEntity, "Vitaliy", "12345", "male"));
+        list.add(createUser(classEntity, "Evgeniy", "12345", "male"));
+        list.add(createUser(classEntity, "Sergey", "12345", "male"));
+        list.add(createUser(classEntity, "Maksim", "12345", "male"));
         return list;
     }
 
@@ -147,7 +150,7 @@ public class DefaultClassInteractor {
     private String generateLesson() {
         LessonEntity lesson = new LessonEntity();
         lesson.setTitle("Health&Safety");
-        lesson.setDescription("Description");
+        lesson.setDescription("Staying safe and sound is the key to the longevity and it is also a frequent topic for discussion among modern people considering the current ecological state of our planet. Study the vocabulary and learn new words and phrases to be more confident while speaking about health and safety with your friends and pen-friends from all over the world.");
         LessonEntity lessonNew = lessonWrapper.save(lesson);
         List<DictionaryEntity> dictionaryEntities = generateDictionaries(lessonNew);
         generateTasks(lessonNew, dictionaryEntities);
@@ -162,7 +165,7 @@ public class DefaultClassInteractor {
         tasks.add(generateTask("Phrase-Building", ContentTaskMockHelper.getPhraseBuilderTaslContent(), 3, "phrase_building", lesson));
         tasks.add(generateTask("Translation", ContentTaskMockHelper.getTranslationTaskContent(), 4, "translation", lesson));
         tasks.add(generateTask("Dictionary Pictionary", ContentTaskMockHelper.getDictionaryPictionaryTaskContent(), 5, "dictionary_pictionary", lesson));
-        tasks.add(generateTask("Dialog", ContentTaskMockHelper.getDialogWithUnknownContent(), 6, "dialog_with_unknown", lesson));
+        tasks.add(generateTask("Dialogue practice", ContentTaskMockHelper.getDialogWithUnknownContent(), 6, "dialog_with_unknown", lesson, true));
         lessonWrapper.saveTasks(tasks);
     }
 
@@ -173,6 +176,18 @@ public class DefaultClassInteractor {
         task.setPosition(postion);
         task.setType(type);
         task.setLesson(lesson);
+        task.setOptional(false);
+        return task;
+    }
+
+    private TaskEntity generateTask(String title, String content, int postion, String type, LessonEntity lesson, boolean optional) {
+        TaskEntity task = new TaskEntity();
+        task.setTitle(title);
+        task.setContent(content);
+        task.setPosition(postion);
+        task.setType(type);
+        task.setLesson(lesson);
+        task.setOptional(optional);
         return task;
     }
 
@@ -224,12 +239,12 @@ public class DefaultClassInteractor {
     }
 
     public static String getJsonString(String path) {
-        StringBuilder json = new StringBuilder();
-        try (Stream<String> stream = Files.lines(new ClassPathResource(path).getFile().toPath())) {
-            stream.forEach(s -> json.append(s).append("\n"));
+        try (InputStream stream = new ClassPathResource(path).getInputStream()) {
+            return new BufferedReader(new InputStreamReader(stream)).lines()
+                    .parallel().collect(Collectors.joining("\n"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return json.toString();
+        return "";
     }
 }
