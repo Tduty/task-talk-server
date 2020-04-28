@@ -1,21 +1,31 @@
 package info.tduty.typetalkserver.domain.interactor;
 
-import info.tduty.typetalkserver.data.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import info.tduty.typetalkserver.data.entity.*;
 import info.tduty.typetalkserver.domain.mapper.ContentTaskMockHelper;
+import info.tduty.typetalkserver.domain.mapper.object.DictionaryObject;
 import info.tduty.typetalkserver.repository.wrapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class DefaultClassInteractor {
 
+    private final static Gson gson = new Gson();
     private ClassWrapper classWrapper;
     private UserWrapper userWrapper;
     private ChatWrapper chatWrapper;
@@ -136,19 +146,19 @@ public class DefaultClassInteractor {
 
     private String generateLesson() {
         LessonEntity lesson = new LessonEntity();
-        lesson.setTitle("Weather");
+        lesson.setTitle("Health&Safety");
         lesson.setDescription("Description");
         LessonEntity lessonNew = lessonWrapper.save(lesson);
-        generateDictionaries(lessonNew);
-        generateTasks(lessonNew);
+        List<DictionaryEntity> dictionaryEntities = generateDictionaries(lessonNew);
+        generateTasks(lessonNew, dictionaryEntities);
         return lessonNew.getId();
     }
 
-    private void generateTasks(LessonEntity lesson) {
+    private void generateTasks(LessonEntity lesson, List<DictionaryEntity> dictionaryEntities) {
         List<TaskEntity> tasks = new ArrayList<>();
-        tasks.add(generateTask("Flashcards", ContentTaskMockHelper.getFlashcardTaskContent(), 0, "flashcards", lesson));
-        tasks.add(generateTask("Wordamess?", ContentTaskMockHelper.getWordamessContent(), 1, "wordamess", lesson));
-        tasks.add(generateTask("Hurry up", ContentTaskMockHelper.getHurryUpTask(), 2, "hurry_up", lesson));
+        tasks.add(generateTask("Flashcards", ContentTaskMockHelper.getFlashcardTaskContent(dictionaryEntities), 0, "flashcards", lesson));
+        tasks.add(generateTask("Wordamess?", ContentTaskMockHelper.getWordamessContent(dictionaryEntities), 1, "wordamess", lesson));
+        tasks.add(generateTask("Hurry up", ContentTaskMockHelper.getHurryUpTask(dictionaryEntities), 2, "hurry_up", lesson));
         tasks.add(generateTask("Phrase-Building", ContentTaskMockHelper.getPhraseBuilderTaslContent(), 3, "phrase_building", lesson));
         tasks.add(generateTask("Translation", ContentTaskMockHelper.getTranslationTaskContent(), 4, "translation", lesson));
         tasks.add(generateTask("Dictionary Pictionary", ContentTaskMockHelper.getDictionaryPictionaryTaskContent(), 5, "dictionary_pictionary", lesson));
@@ -166,7 +176,34 @@ public class DefaultClassInteractor {
         return task;
     }
 
-    private void generateDictionaries(LessonEntity lesson) {
+    private List<DictionaryEntity>  generateDictionaries(LessonEntity lesson) {
+        List<DictionaryEntity> dictionaries = new ArrayList<>();
+        try {
+            Type type = new TypeToken<List<DictionaryObject>>() {
+            }.getType();
+            String json = getJsonString("private/DictionaryJson");
+            List<DictionaryObject> dictionaryObjects = gson.fromJson(json, type);
+            dictionaries = mapDictionaryObjToEntity(dictionaryObjects, lesson);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+            dictionaries = getMockDictionary(lesson);
+        }
+
+        dictionaryWrapper.save(dictionaries);
+        return dictionaries;
+    }
+
+    private List<DictionaryEntity> mapDictionaryObjToEntity(List<DictionaryObject> dictionaryObjects, LessonEntity lesson) {
+        List<DictionaryEntity> dictionaries = new ArrayList<>();
+        dictionaryObjects.forEach(dictionaryObject ->
+                dictionaries.add(generateDictionary(dictionaryObject.getContent(), dictionaryObject.getTranscription(),
+                        dictionaryObject.getTranslation(),
+                        lesson))
+        );
+        return dictionaries;
+    }
+
+    private List<DictionaryEntity> getMockDictionary(LessonEntity lesson) {
         List<DictionaryEntity> dictionaries = new ArrayList<>();
         dictionaries.add(generateDictionary("content", "transcription", "translation", lesson));
         dictionaries.add(generateDictionary("content1", "transcription1", "translation1", lesson));
@@ -174,7 +211,7 @@ public class DefaultClassInteractor {
         dictionaries.add(generateDictionary("content3", "transcription3", "translation3", lesson));
         dictionaries.add(generateDictionary("content4", "transcription4", "translation4", lesson));
         dictionaries.add(generateDictionary("content5", "transcription5", "translation5", lesson));
-        dictionaryWrapper.save(dictionaries);
+        return dictionaries;
     }
 
     private DictionaryEntity generateDictionary(String content, String transcription, String translation, LessonEntity lesson) {
@@ -184,5 +221,15 @@ public class DefaultClassInteractor {
         dictionary.setTranslation(translation);
         dictionary.setLesson(lesson);
         return dictionary;
+    }
+
+    public static String getJsonString(String path) {
+        StringBuilder json = new StringBuilder();
+        try (Stream<String> stream = Files.lines(new ClassPathResource(path).getFile().toPath())) {
+            stream.forEach(s -> json.append(s).append("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
     }
 }
