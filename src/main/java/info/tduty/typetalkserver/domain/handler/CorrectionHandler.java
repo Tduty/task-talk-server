@@ -46,6 +46,7 @@ public class CorrectionHandler implements EventHandler<CorrectionPayload> {
         if (chat != null) {
             Set<UserEntity> users = chat.getChatMembers();
             List<String> userIds = users.stream().map(UserEntity::getId).collect(Collectors.toList());
+            userIds.add(teacher.getId());
             eventSender.send(userIds, new Event(EventPayload.Type.CORRECTION.getString(), payload));
         }
     }
