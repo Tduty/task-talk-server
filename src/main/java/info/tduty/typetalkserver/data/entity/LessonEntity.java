@@ -21,7 +21,7 @@ public class LessonEntity {
     @Column(name="avatar_url")
     private String avatar;
 
-    @Column(name="description")
+    @Column(name="description", columnDefinition = "LONGTEXT")
     private String description;
 
     @ManyToMany(mappedBy="lessons", fetch = FetchType.EAGER)
