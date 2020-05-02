@@ -2,7 +2,7 @@
   {
     "type": "phrase",
     "word": "развиваться",
-    "current_translate": "to develope"
+    "current_translate": "to develop"
   },
   {
     "type": "phrase",
@@ -17,7 +17,7 @@
   {
     "type": "phrase",
     "word": "потеть",
-    "current_translate": "to sweat "
+    "current_translate": "to sweat"
   },
   {
     "type": "phrase",
@@ -37,7 +37,7 @@
   {
     "type": "phrase",
     "word": "отвечать",
-    "current_translate": "to respond "
+    "current_translate": "to respond"
   },
   {
     "type": "phrase",
@@ -52,7 +52,7 @@
   {
     "type": "phrase",
     "word": "с низким содержанием чего-то",
-    "current_translate": ""
+    "current_translate": "low in"
   },
   {
     "type": "phrase",
@@ -77,7 +77,7 @@
   {
     "type": "phrase",
     "word": "заняться спортом",
-    "current_translate": ""
+    "current_translate": "to take up"
   },
   {
     "type": "phrase",
@@ -122,7 +122,7 @@
   {
     "type": "phrase",
     "word": "кратчайший путь",
-    "current_translate": "a short cut "
+    "current_translate": "a short cut"
   },
   {
     "type": "phrase",
@@ -136,13 +136,13 @@
   },
   {
     "type": "phrase",
-    "word": "fight one fears",
-    "current_translate": ""
+    "word": "fight one’s fears",
+    "current_translate": "побороть страхи"
   },
   {
     "type": "phrase",
-    "word": "to be scared to deathstray",
-    "current_translate": ""
+    "word": "to be scared to death",
+    "current_translate": "быть напуганным до смерти"
   },
   {
     "type": "phrase",
@@ -161,12 +161,12 @@
   },
   {
     "type": "phrase",
-    "word": "to set an alarm clock",
-    "current_translate": ""
+    "word": "to set the alarm clock",
+    "current_translate": "ставить будильник"
   },
   {
     "type": "phrase",
-    "word": "to be recipe for disaster",
+    "word": "to be a recipe for disaster",
     "current_translate": "залог провала"
   },
   {
@@ -242,7 +242,7 @@
   {
     "type": "phrase",
     "word": "treatment",
-    "current_translate": ""
+    "current_translate": "лечение"
   },
   {
     "type": "phrase",
@@ -281,7 +281,7 @@
   },
   {
     "type": "sentence",
-    "word": "A child was shaking like  a leaf while the fireman was trying to save their parents from a burning car.",
+    "word": "A child was shaking like  a leaf while the fireman was trying to save his parents from a burning car.",
     "current_translate": ""
   },
   {

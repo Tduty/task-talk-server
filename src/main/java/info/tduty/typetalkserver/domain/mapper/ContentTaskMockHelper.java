@@ -134,7 +134,7 @@ public class ContentTaskMockHelper {
 
     public static String getDialogWithUnknownContent() {
         return gson.toJson(new DialogWihtUnknown("Here you are supposed to make a dialogue with your random partner about health issues or hazardous situations.\n" +
-                "(The limit of messages is 10 sentences from each side - 20 summarily. The dialogue shouldn’t be shorter than 10 lines)", 10));
+                "(The limit of messages is 10 sentences from each side - 20 summarily. The whole dialogue shouldn’t be shorter than 10 lines)", 10));
     }
 
     private static class FlashcardTask {
